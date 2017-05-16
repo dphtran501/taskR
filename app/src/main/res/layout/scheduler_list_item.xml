@@ -17,19 +17,21 @@
         android:gravity="center"
         android:orientation="vertical"
         android:layout_marginLeft="10dp">
+
         <TextView
-            android:text="@string/scheduler_list_item_name"
+            android:id="@+id/scheduler_list_item_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:id="@+id/scheduler_list_item_name"
-            android:textColor="@android:color/black"/>
+            android:text="@string/scheduler_list_item_name"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
         <TextView
+            android:id="@+id/scheduler_list_item_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="1dp"
-            android:textSize="16sp"
             android:text="@string/scheduler_list_item_desc"
-            android:id="@+id/scheduler_list_item_desc"/>
+            android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>

@@ -33,6 +33,13 @@ public class SchedulerAdapter extends ArrayAdapter<Template> {
         mTemplatesList = templates;
     }
 
+    /**
+     * <code>getView</code> binds an arraylist input with a ListView format from XML layout
+     * @param pos position of the ListView object
+     * @param convertView Converts default ListView object to format specified in XML
+     * @param parent Parent listview
+     * @return
+     */
     @Override
     public View getView(int pos, View convertView, ViewGroup parent) {
         final Template selectedTemplate = mTemplatesList.get(pos);

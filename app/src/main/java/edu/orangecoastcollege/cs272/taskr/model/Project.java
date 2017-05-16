@@ -28,4 +28,5 @@ public class Project extends SubtaskedAssignment
     {
         return "Project{}";
     }
+
 }

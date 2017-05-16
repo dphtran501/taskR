@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
-    android:id="@+id/project_LV_item"
+    android:id="@+id/ma_project_LV_item"
     android:paddingLeft="10dp"
     android:paddingRight="10dp">
     <ImageView

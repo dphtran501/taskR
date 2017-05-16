@@ -78,8 +78,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         /* Button Listeners */
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         findViewById(R.id.ma_vincent_scheduler_button).setOnClickListener(this);
-        findViewById(R.id.scheduler_add_button).setOnClickListener(this);
-        findViewById(R.id.scheduler_delete_button).setOnClickListener(this);
+        //findViewById(R.id.scheduler_add_button).setOnClickListener(this);
+        //findViewById(R.id.scheduler_delete_button).setOnClickListener(this);
 
 
         findViewById(R.id.ma_derek_manager_button).setOnClickListener(this);

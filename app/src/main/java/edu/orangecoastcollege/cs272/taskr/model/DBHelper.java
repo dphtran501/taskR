@@ -449,7 +449,7 @@ public class DBHelper extends SQLiteOpenHelper
      * Deletes all project-subtask relationship records of one project from the relation table.
      * @param projID ID of the project of the project-subtask relationship(s) to delete (its primary key)
      */
-    public void deleteProjectProjSubs(int projID)
+    public void deleteSubsOfProj(int projID)
     {
         SQLiteDatabase db = this.getWritableDatabase();
 

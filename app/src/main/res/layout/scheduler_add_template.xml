@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="6">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+
+        android:padding="10dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/s_nameTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="@string/s_nameTV"
+            android:textSize="18sp"/>
+        <EditText
+            android:id="@+id/s_nameET"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/s_nameHint"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/border"
+            android:paddingLeft="5dp"/>
+        <TextView
+            android:id="@+id/s_summaryTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="@string/s_summaryTV"
+            android:textSize="18sp"/>
+        <EditText
+            android:id="@+id/s_summaryET"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/s_summaryHint"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/border"
+            android:paddingLeft="5dp"/>
+        <TextView
+            android:id="@+id/s_descTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/s_descTV"
+            android:textSize="18sp"
+            android:layout_marginBottom="2dp"/>
+        <EditText
+            android:id="@+id/s_descET"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/s_descHint"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/border"
+            android:paddingLeft="5dp"/>
+        <TextView
+            android:id="@+id/s_locationTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/s_locationTV"
+            android:textSize="18sp"
+            android:layout_marginBottom="2dp"/>
+        <EditText
+            android:id="@+id/s_locationET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/s_locationHint"
+            android:background="@drawable/border"
+            android:paddingLeft="5dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+                <Button
+                    android:id="@+id/s_toggle_startTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/s_toggle_startTime"/>
+                    <Button
+                    android:id="@+id/s_toggle_endTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/s_toggle_endTime"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/thistle">
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

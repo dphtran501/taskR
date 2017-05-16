@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">taskR</string>
+
+    <!-- // MainActivity // -->
+
+    <!-- Vincent -->
+    <string name="ma_vincent_login_text_false">Please log in</string>
+    <string name="ma_vincent_login_text_true">Logged in!</string>
+    <string name="ma_vincent_go_text">scheduleR</string>
+    <string name="ma_vincent_scheduler_desc">Create and use templates to quickly add events to your calendar</string>
+    <string name="ma_vincent_no_network">Device offline</string>
+
+        <!-- Scheduler Strings -->
+        <string name="scheduler_add_template">Create template</string>
+        <string name="scheduler_delete_template">Delete template</string>
+            <!-- Scheduler List View -->
+            <string name="scheduler_list_item_name">TEXT</string>
+            <string name="scheduler_list_item_desc">TEXT</string>
+            <!-- Scheduler Add Template -->
+            <string name="s_nameTV">Template name</string>
+            <string name="s_nameHint">Enter the name of the template</string>
+            <string name="s_summaryTV">Event name</string>
+            <string name="s_summaryHint">Enter the calendar event name</string>
+            <string name="s_descTV">Description</string>
+            <string name="s_descHint">Enter a description of the event</string>
+            <string name="s_locationTV">Location</string>
+            <string name="s_locationHint">Enter the location of the event</string>
+            <string name="s_toggle_startTime">Toggle Start Time</string>
+            <string name="s_toggle_endTime">Toggle End Time</string>
+
+    <!-- Derek -->
+    <string name="ma_derek_go_text">manageR</string>
+    <string name="ma_derek_manager_desc">Manage due dates with small calendar reminders leading up to the deadline</string>
+
+    <!-- Brian -->
+    <string name="ma_brian_go_text">remindeR</string>
+    <string name="ma_brian_reminder_desc">IS BRIAN EVER GOING TO DELIVER. STAY TUNED</string>
+
+
+</resources>

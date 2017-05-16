@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "39031574943",
+    "firebase_url": "https://taskr-167706.firebaseio.com",
+    "project_id": "taskr-167706",
+    "storage_bucket": "taskr-167706.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:39031574943:android:3c3c5c5c6391c5e3",
+        "android_client_info": {
+          "package_name": "edu.orangecoastcollege.cs272.taskr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "39031574943-n9pav2i6o7v06g6krv94ann53rg44qbt.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "39031574943-99gvadond1ogv30qoua7tldjcb6nekph.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.orangecoastcollege.cs272.taskr",
+            "certificate_hash": "f8e99a85888fc35bd9cbb3e901bda423b6eb7c7c"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYxx-O_j0i2ohZ9FPMB_3hnzqt1i2-BZ8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "39031574943-n9pav2i6o7v06g6krv94ann53rg44qbt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

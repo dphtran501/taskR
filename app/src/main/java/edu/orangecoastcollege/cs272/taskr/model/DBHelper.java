@@ -164,7 +164,7 @@ public class DBHelper extends SQLiteOpenHelper
 
         values.put(PROJECTS_FIELD_NAMES[1], p.getName());
         values.put(PROJECTS_FIELD_NAMES[2], p.getDescription());
-        values.put(PROJECTS_FIELD_NAMES[3], p.getDescription());
+        values.put(PROJECTS_FIELD_NAMES[3], p.getDueDate());
         values.put(PROJECTS_FIELD_NAMES[4], p.hasSubtasks() ? "1" : "0");
 
         db.insert(PROJECTS_TABLE_NAME, null, values);
@@ -192,7 +192,7 @@ public class DBHelper extends SQLiteOpenHelper
 
         values.put(PROJECTS_FIELD_NAMES[1], p.getName());
         values.put(PROJECTS_FIELD_NAMES[2], p.getDescription());
-        values.put(PROJECTS_FIELD_NAMES[3], p.getDescription());
+        values.put(PROJECTS_FIELD_NAMES[3], p.getDueDate());
         values.put(PROJECTS_FIELD_NAMES[4], p.hasSubtasks() ? "1" : "0");
 
         db.update(PROJECTS_TABLE_NAME, values, PROJECTS_FIELD_NAMES[0] + "=?",
@@ -308,7 +308,7 @@ public class DBHelper extends SQLiteOpenHelper
 
         values.put(SUBTASKS_FIELD_NAMES[1], s.getName());
         values.put(SUBTASKS_FIELD_NAMES[2], s.getDescription());
-        values.put(SUBTASKS_FIELD_NAMES[3], s.getDescription());
+        values.put(SUBTASKS_FIELD_NAMES[3], s.getDueDate());
 
         db.insert(SUBTASKS_TABLE_NAME, null, values);
 
@@ -335,7 +335,7 @@ public class DBHelper extends SQLiteOpenHelper
 
         values.put(SUBTASKS_FIELD_NAMES[1], s.getName());
         values.put(SUBTASKS_FIELD_NAMES[2], s.getDescription());
-        values.put(SUBTASKS_FIELD_NAMES[3], s.getDescription());
+        values.put(SUBTASKS_FIELD_NAMES[3], s.getDueDate());
 
         db.update(SUBTASKS_TABLE_NAME, values, SUBTASKS_FIELD_NAMES[0] + "=?",
                 new String[]{String.valueOf(s.getID())});

@@ -123,7 +123,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 setContentView(R.layout.scheduler_home);
                 break;
             case R.id.ma_derek_manager_button:
-                setContentView(R.layout.ma_home);
+                Intent changeActivity = new Intent(this, ViewAllProjectsActivity.class);
+                startActivity(changeActivity);
                 break;
         }
     }

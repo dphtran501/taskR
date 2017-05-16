@@ -95,7 +95,7 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
     private String datePickerToString(DatePicker dp)
     {
         int year = dp.getYear();
-        int month = dp.getMonth();
+        int month = dp.getMonth() + 1;
         int day = dp.getDayOfMonth();
 
         return checkDigit(year) + "-" + checkDigit(month) + "-" + checkDigit(day);

@@ -20,13 +20,13 @@ import edu.orangecoastcollege.cs272.taskr.model.Template;
  * Created by vietn on 5/3/2017.
  */
 
-public class TemplateListAdapter extends ArrayAdapter<Template> {
+public class SchedulerAdapter extends ArrayAdapter<Template> {
 
     private Context mContext;
     private List<Template> mTemplatesList = new ArrayList<>();
     private int mResourceId;
 
-    public TemplateListAdapter(Context context, int resourceId, List<Template> templates) {
+    public SchedulerAdapter(Context context, int resourceId, List<Template> templates) {
         super(context, resourceId, templates);
         mContext = context;
         mResourceId = resourceId;
@@ -40,7 +40,7 @@ public class TemplateListAdapter extends ArrayAdapter<Template> {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(mResourceId, null);
 
-        LinearLayout templateListLinearLayout = (LinearLayout) view.findViewById(R.id.templatesListObjectLinearLayout);
+        LinearLayout templateListLinearLayout = (LinearLayout) view.findViewById(R.id.scheduler_list_view_object);
 
         TextView name = (TextView) view.findViewById(R.id.scheduler_list_item_name);
         TextView desc = (TextView) view.findViewById(R.id.scheduler_list_item_desc);

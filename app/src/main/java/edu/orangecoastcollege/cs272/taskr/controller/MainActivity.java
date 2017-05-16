@@ -121,6 +121,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.ma_vincent_scheduler_button:
                 setContentView(R.layout.scheduler_home);
+                break;
+            case R.id.ma_derek_manager_button:
+                setContentView(R.layout.ma_home);
+                break;
         }
     }
 

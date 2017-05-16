@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="350dp"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:weightSum="10">
+
+            <TextView
+                android:id="@+id/ma_asub_dueDateTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:layout_marginBottom="2dp"
+                android:text="@string/ma_asub_dueDateTV"
+                android:textSize="18sp" />
+
+            <DatePicker
+                android:id="@+id/ma_asub_dueDateDP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:layout_marginTop="-30dp"
+                android:layout_marginBottom="-50dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/ma_asub_nameTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:text="@string/ma_asub_nameTV"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/ma_asub_nameET"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/border"
+                android:paddingLeft="5dp" />
+
+            <TextView
+                android:id="@+id/ma_asub_descriptionTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:text="@string/ma_asub_descriptionTV"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/ma_asub_descriptionET"
+                android:layout_width="fill_parent"
+                android:layout_height="150dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/border"
+                android:gravity="top|left"
+                android:paddingLeft="5dp" />
+
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+            <Button
+                android:id="@+id/ma_asub_add_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="@string/ma_asub_add_button"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>

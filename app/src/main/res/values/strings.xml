@@ -31,6 +31,49 @@
     <!-- Derek -->
     <string name="ma_derek_go_text">manageR</string>
     <string name="ma_derek_manager_desc">Manage due dates with small calendar reminders leading up to the deadline</string>
+        <!-- Manager Home View -->
+        <string name="ma_view_project_button">View Project</string>
+        <string name="ma_delete_project_button">Delete Project</string>
+        <string name="ma_add_project_button">Add Project</string>
+        <string name="ma_project_LV_item_name">Project Name</string>
+        <string name="ma_project_LV_item_dueDate">Project Due Date</string>
+            <!-- Manager View Project View -->
+            <string name="ma_vproj_dueDateTV">Project Due Date</string>
+            <string name="ma_vproj_nameTV">Project Name</string>
+            <string name="ma_vproj_descriptionTV">Project Description</string>
+            <string name="ma_vproj_subtasksTV">Subtasks:</string>
+            <string name="ma_vproj_edit_button">Edit Project</string>
+            <string name="ma_vproj_add_button">Add Subtask</string>
+            <string name="ma_vproj_view_button">View Subtask</string>
+            <string name="ma_vproj_delete_button">Delete Subtask</string>
+            <string name="ma_subtask_LV_item_name">Subtask Name</string>
+            <string name="ma_subtask_LV_item_dueDate">Subtask Due Date</string>
+                <!-- Manager Edit Project View -->
+                <string name="ma_eproj_dueDateTV">Choose a due date</string>
+                <string name="ma_eproj_nameTV">Enter project name</string>
+                <string name="ma_eproj_descriptionTV">Enter project description</string>
+                <string name="ma_eproj_save_button">Save Project</string>
+                <!-- Manager View Subtask View -->
+                <string name="ma_vsub_nameTV">Subtask Name</string>
+                <string name="ma_vsub_dueDateTV">Subtask Due Date</string>
+                <string name="ma_vsub_descriptionTV">Subtask Description</string>
+                <string name="ma_vsub_edit_button">Edit Subtask</string>
+                    <!-- Manager Edit Subtask View -->
+                    <string name="ma_esub_dueDateTV">Choose a due date</string>
+                    <string name="ma_esub_nameTV">Enter subtask name</string>
+                    <string name="ma_esub_descriptionTV">Enter subtask description</string>
+                    <string name="ma_esub_save_button">Save Subtask</string>
+                <!-- Manager Add Subtask View -->
+                <string name="ma_asub_dueDateTV">Choose a due date</string>
+                <string name="ma_asub_nameTV">Enter subtask name</string>
+                <string name="ma_asub_descriptionTV">Enter subtask description</string>
+                <string name="ma_asub_add_button">Add Subtask</string>
+
+            <!-- Manager Add Project View -->
+            <string name="ma_aproj_dueDateTV">Choose a due date</string>
+            <string name="ma_aproj_nameTV">Enter project name</string>
+            <string name="ma_aproj_descriptionTV">Enter project description</string>
+            <string name="ma_aproj_add_button">Add Project</string>
 
     <!-- Brian -->
     <string name="ma_brian_go_text">remindeR</string>

@@ -1,12 +1,13 @@
 package edu.orangecoastcollege.cs272.taskr.controller;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -35,6 +36,8 @@ public class ViewAllProjectsActivity extends AppCompatActivity implements View.O
     private ListView allProjectsLV;
     static ArrayList<Project> allProjectsList;
 
+    private Project selectedProject;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -48,6 +51,17 @@ public class ViewAllProjectsActivity extends AppCompatActivity implements View.O
         allProjectsLV = (ListView) findViewById(R.id.ma_projectsLV);
         adaptProject = new ProjectListAdapter(this, R.layout.ma_project_list_item, allProjectsList);
         allProjectsLV.setAdapter(adaptProject);
+        // handle list view item clicks
+        allProjectsLV.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Context context = ViewAllProjectsActivity.this;
+                selectedProject = allProjectsList.get(position);
+                //Toast.makeText(context, String.valueOf(selectedProject.getID()), Toast.LENGTH_LONG).show();
+            }
+        });
 
         // set up buttons to be associated with actions
         findViewById(R.id.ma_view_project_button).setOnClickListener(this);
@@ -65,7 +79,7 @@ public class ViewAllProjectsActivity extends AppCompatActivity implements View.O
             case R.id.ma_view_project_button:
                 if (allProjectsLV.getSelectedItem() != null)
                 {
-                    Project selectedProject = getSelectedProject();
+                    //Project selectedProject = getSelectedProject();
                     intentChangeView = new Intent(this, ViewProjectActivity.class);
                     intentChangeView.putExtra("id", selectedProject.getID());
                     intentChangeView.putExtra("name", selectedProject.getName());
@@ -80,24 +94,27 @@ public class ViewAllProjectsActivity extends AppCompatActivity implements View.O
                 startActivity(intentChangeView);
                 break;
             case R.id.ma_delete_project_button:
-                if (allProjectsLV.getSelectedItem() != null)
+                if (selectedProject != null)
                 {
-                    Project selectedProject = getSelectedProject();
                     deleteProjectFromDB(selectedProject);
+                    selectedProject = null;
                 }
                 break;
         }
     }
 
+
     /**
      * Gets the selected <code>Project</code> in the list view.
      * @return Selected <code>Project</code> in the list view.
      */
+    /*
     private Project getSelectedProject()
     {
         int projectPos = allProjectsLV.getSelectedItemPosition();
         return allProjectsList.get(projectPos);
     }
+    */
 
     /**
      * Deletes a project and any related subtasks from the database.

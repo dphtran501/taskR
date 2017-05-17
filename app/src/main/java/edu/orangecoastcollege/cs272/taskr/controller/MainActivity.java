@@ -122,17 +122,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v)
+    {
+        Intent changeActivity;
         switch (v.getId()) {
             case R.id.sign_in_button:
                 signIn();
                 break;
             case R.id.ma_vincent_scheduler_button:
-                Intent changeActivity = new Intent(this, SchedulerHome.class);
+                changeActivity = new Intent(this, SchedulerHome.class);
                 startActivity(changeActivity);
                 break;
             case R.id.ma_derek_manager_button:
-                Intent changeActivity = new Intent(this, ViewAllProjectsActivity.class);
+                changeActivity = new Intent(this, ViewAllProjectsActivity.class);
                 startActivity(changeActivity);
                 break;
         }

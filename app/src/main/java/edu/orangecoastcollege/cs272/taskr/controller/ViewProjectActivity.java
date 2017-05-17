@@ -22,6 +22,7 @@ public class ViewProjectActivity extends AppCompatActivity
 {
     TextView dueDateTV;
     TextView descriptionTV;
+    //comment
 
     // TODO: need to retrieve selected item from projects list view
 

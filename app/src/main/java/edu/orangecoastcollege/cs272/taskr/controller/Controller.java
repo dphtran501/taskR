@@ -16,8 +16,7 @@ import edu.orangecoastcollege.cs272.taskr.model.Template;
 
 
 public final class Controller extends Application {
-
-    DBHelper mDB = new DBHelper(getApplicationContext());
+    DBHelper mDB;
     private static Controller theOne;
     ArrayList<Template> mAllTemplatesList;
     Template mTemplate;
@@ -29,11 +28,12 @@ public final class Controller extends Application {
         if (theOne == null) {
             theOne = new Controller();
         }
+        theOne.mDB = new DBHelper(MainActivity.getContext());
         return theOne;
     }
 
     public void setmDB(DBHelper db) {
-        this.mDB = db;
+        theOne.mDB = db;
     }
 
     public ArrayList<Template> getAllTemplates() {

@@ -1,12 +1,15 @@
 package edu.orangecoastcollege.cs272.taskr.view.scheduler;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
-import edu.orangecoastcollege.cs272.taskr.controller.Controller;
+import edu.orangecoastcollege.cs272.taskr.controller.DatabaseController;
 import edu.orangecoastcollege.cs272.taskr.model.DBHelper;
 import edu.orangecoastcollege.cs272.taskr.model.Template;
 import edu.orangecoastcollege.cs272.taskr.view.scheduler.TemplateListAdapter;
@@ -20,22 +23,25 @@ public class SchedulerHome extends AppCompatActivity implements View.OnClickList
     TemplateListAdapter adaptTemplate;
     ListView allTemplatesListLV;
     ArrayList<Template> allTemplatesList;
-    Controller controller = Controller.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scheduler_home);
-        DBHelper db = new DBHelper(this);
-        controller.setmDB(db);
 
-        allTemplatesList = controller.getAllTemplates();
+
+        DatabaseController dbController = DatabaseController.getInstance(this);
+
+        dbController.openDatabase();
+        allTemplatesList = Template.getAllTemplates(dbController);
+        dbController.close();
         allTemplatesListLV = (ListView) findViewById(R.id.schedulerListView);
         adaptTemplate = new TemplateListAdapter(this, R.layout.scheduler_list_item, allTemplatesList);
         allTemplatesListLV.setAdapter(adaptTemplate);
 
         findViewById(R.id.scheduler_add_button).setOnClickListener(this);
     }
+
 
     @Override
     public void onClick(View v) {

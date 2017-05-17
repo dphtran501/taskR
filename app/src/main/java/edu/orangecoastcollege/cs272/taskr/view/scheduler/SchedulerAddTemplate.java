@@ -7,7 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import edu.orangecoastcollege.cs272.taskr.R;
-import edu.orangecoastcollege.cs272.taskr.controller.Controller;
+import edu.orangecoastcollege.cs272.taskr.controller.DatabaseController;
 import edu.orangecoastcollege.cs272.taskr.model.Template;
 
 public class SchedulerAddTemplate extends AppCompatActivity implements View.OnClickListener {
@@ -19,7 +19,7 @@ public class SchedulerAddTemplate extends AppCompatActivity implements View.OnCl
     boolean startTimeToggle;
     boolean endTimeToggle;
     TextView startTime;
-    Controller controller = Controller.getInstance();
+    DatabaseController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,7 @@ public class SchedulerAddTemplate extends AppCompatActivity implements View.OnCl
         findViewById(R.id.s_save_new).setOnClickListener(this);
         findViewById(R.id.s_toggle_startTime).setOnClickListener(this);
         findViewById(R.id.s_toggle_endTime).setOnClickListener(this);
+        controller = DatabaseController.getInstance(this);
 
         endTimeToggle = false;
         startTimeToggle = false;
@@ -53,7 +54,10 @@ public class SchedulerAddTemplate extends AppCompatActivity implements View.OnCl
         //} else {
         //    endTime = "";
 
-        controller.addTemplate(new Template(templateName, eventName, description, location, "12:00", "12:00"));
+        Template template = new Template(templateName, eventName, description, location, "12:00", "12:00");
+        controller.openDatabase();
+        template.save(controller);
+        controller.close();
         }
 
     @Override
@@ -84,6 +88,7 @@ public class SchedulerAddTemplate extends AppCompatActivity implements View.OnCl
             case R.id.s_endTime_button:
                 break;
             case R.id.s_save_new:
+                createFromTemplateFields();
                 break;
         }
     }

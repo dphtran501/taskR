@@ -10,6 +10,11 @@ package edu.orangecoastcollege.cs272.taskr.model;
  */
 public class Project extends SubtaskedAssignment
 {
+
+    private static final String PROJECTS_TABLE_NAME = "projects";
+    public static final String[] PROJECTS_FIELD_NAMES = {"proj_id", "name", "description", "due_date", "subtasks"};
+    public static final String[] PROJECTS_FIELD_TYPES = {"INTEGER PRIMARY KEY AUTOINCREMENT", "TEXT", "TEXT", "TEXT", "INTEGER"};
+
     /**
      * Creates a new <code>Project</code> object.
      * @param id The ID of the project.

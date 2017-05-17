@@ -72,23 +72,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Event mEvent;
 
     // Database
-    private static MainActivity instance;
-    Controller controller = Controller.getInstance();
 
-    public MainActivity() {
-        instance = this;
-    }
-
-    public static Context getContext() {
-        return instance;
-    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getApplicationContext();
+
+        DatabaseController db = DatabaseController.getInstance(this);
 
         /* Button Listeners */
         findViewById(R.id.sign_in_button).setOnClickListener(this);

@@ -72,9 +72,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Event mEvent;
 
     // Database
-    //Controller controller = Controller.getInstance();
+    private static MainActivity instance;
+    Controller controller = Controller.getInstance();
 
+    public MainActivity() {
+        instance = this;
+    }
 
+    public static Context getContext() {
+        return instance;
+    }
 
 
     @Override
@@ -122,8 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View v)
-    {
+    public void onClick(View v) {
         Intent changeActivity;
         switch (v.getId()) {
             case R.id.sign_in_button:

@@ -57,8 +57,8 @@ public class ViewAllProjectsActivity extends AppCompatActivity implements View.O
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                Context context = ViewAllProjectsActivity.this;
                 selectedProject = allProjectsList.get(position);
+                //Context context = ViewAllProjectsActivity.this;
                 //Toast.makeText(context, String.valueOf(selectedProject.getID()), Toast.LENGTH_LONG).show();
             }
         });
@@ -81,11 +81,11 @@ public class ViewAllProjectsActivity extends AppCompatActivity implements View.O
                 {
                     //Project selectedProject = getSelectedProject();
                     intentChangeView = new Intent(this, ViewProjectActivity.class);
-                    intentChangeView.putExtra("id", selectedProject.getID());
-                    intentChangeView.putExtra("name", selectedProject.getName());
-                    intentChangeView.putExtra("description", selectedProject.getDescription());
-                    intentChangeView.putExtra("dueDate", selectedProject.getDueDate());
-                    intentChangeView.putExtra("hasSubtasks", selectedProject.hasSubtasks());
+                    intentChangeView.putExtra("projectID", selectedProject.getID());
+                    intentChangeView.putExtra("projectName", selectedProject.getName());
+                    intentChangeView.putExtra("projectDescription", selectedProject.getDescription());
+                    intentChangeView.putExtra("projectDueDate", selectedProject.getDueDate());
+                    intentChangeView.putExtra("projectHasSubtasks", selectedProject.hasSubtasks());
                     startActivity(intentChangeView);
                 }
                 break;

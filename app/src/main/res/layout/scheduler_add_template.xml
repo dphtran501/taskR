@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -76,31 +77,78 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center">
-                <Button
-                    android:id="@+id/s_toggle_startTime"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+                        <Button
+                            android:id="@+id/s_toggle_startTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/s_toggle_startTime"/>
+                        <TextView
+                            android:id="@+id/s_startTime_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/s_startTime_text"
+                            android:visibility="gone"
+                            tools:visibility="visible"/>
+                        <Button
+                            android:id="@+id/s_startTime_button"
+                            android:layout_width="100dp"
+                            android:layout_height="50dp"
+                            android:text="@string/s_pick_startTime"
+                            android:visibility="gone"
+                            tools:visibility="visible"/>
+                    </LinearLayout>
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/s_toggle_startTime"/>
+                    android:orientation="vertical"
+                    android:gravity="center">
                     <Button
-                    android:id="@+id/s_toggle_endTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/s_toggle_endTime"/>
+                        android:id="@+id/s_toggle_endTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/s_toggle_endTime"/>
+                    <TextView
+                        android:id="@+id/s_endTime_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/s_endTime_text"
+                        android:visibility="gone"
+                        tools:visibility="visible"/>
+                    <Button
+                        android:id="@+id/s_endTime_button"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:text="@string/s_pick_endTime"
+                        android:visibility="gone"
+                        tools:visibility="visible"/>
+                </LinearLayout>
             </LinearLayout>
 
 
         </LinearLayout>
+
     </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/thistle">
-
+        android:background="@color/thistle"
+        android:padding="15dp">
+        <Button
+            android:id="@+id/s_save_new"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save"/>
 
     </LinearLayout>
 

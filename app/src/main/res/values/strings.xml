@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">taskR</string>
 
-    <!-- // MainActivity // -->
+    <!-- // General Text Strings // -->
+    <string name="save">Save</string>
 
     <!-- Vincent -->
     <string name="ma_vincent_login_text_false">Please log in</string>
@@ -10,74 +11,78 @@
     <string name="ma_vincent_scheduler_desc">Create and use templates to quickly add events to your calendar</string>
     <string name="ma_vincent_no_network">Device offline</string>
 
-        <!-- Scheduler Strings -->
-        <string name="scheduler_add_template">Create template</string>
-        <string name="scheduler_delete_template">Delete template</string>
-            <!-- Scheduler List View -->
-            <string name="scheduler_list_item_name">TEXT</string>
-            <string name="scheduler_list_item_desc">TEXT</string>
-            <!-- Scheduler Add Template -->
-            <string name="s_nameTV">Template name</string>
-            <string name="s_nameHint">Enter the name of the template</string>
-            <string name="s_summaryTV">Event name</string>
-            <string name="s_summaryHint">Enter the calendar event name</string>
-            <string name="s_descTV">Description</string>
-            <string name="s_descHint">Enter a description of the event</string>
-            <string name="s_locationTV">Location</string>
-            <string name="s_locationHint">Enter the location of the event</string>
-            <string name="s_toggle_startTime">Toggle Start Time</string>
-            <string name="s_toggle_endTime">Toggle End Time</string>
+    <!-- Scheduler Strings -->
+    <string name="scheduler_add_template">Create template</string>
+    <string name="scheduler_delete_template">Delete template</string>
+    <!-- Scheduler List View -->
+    <string name="scheduler_list_item_name">TEXT</string>
+    <string name="scheduler_list_item_desc">TEXT</string>
+    <!-- Scheduler Add Template -->
+    <string name="s_nameTV">Template name</string>
+    <string name="s_nameHint">Enter the name of the template</string>
+    <string name="s_summaryTV">Event name</string>
+    <string name="s_summaryHint">Enter the calendar event name</string>
+    <string name="s_descTV">Description</string>
+    <string name="s_descHint">Enter a description of the event</string>
+    <string name="s_locationTV">Location</string>
+    <string name="s_locationHint">Enter the location of the event</string>
+    <string name="s_toggle_startTime">Toggle Start Time</string>
+    <string name="s_toggle_endTime">Toggle End Time</string>
+    <string name="s_pick_startTime">Pick Start Time</string>
+    <string name="s_pick_endTime">Pick End Time</string>
+    <string name="s_startTime_text">Start Time</string>
+    <string name="s_endTime_text">End Time</string>
 
     <!-- Derek -->
     <string name="ma_derek_go_text">manageR</string>
     <string name="ma_derek_manager_desc">Manage due dates with small calendar reminders leading up to the deadline</string>
-        <!-- Manager Home View -->
-        <string name="ma_view_project_button">View Project</string>
-        <string name="ma_delete_project_button">Delete Project</string>
-        <string name="ma_add_project_button">Add Project</string>
-        <string name="ma_project_LV_item_name">Project Name</string>
-        <string name="ma_project_LV_item_dueDate">Project Due Date</string>
-            <!-- Manager View Project View -->
-            <string name="ma_vproj_dueDateTV">Project Due Date</string>
-            <string name="ma_vproj_nameTV">Project Name</string>
-            <string name="ma_vproj_descriptionTV">Project Description</string>
-            <string name="ma_vproj_subtasksTV">Subtasks:</string>
-            <string name="ma_vproj_edit_button">Edit Project</string>
-            <string name="ma_vproj_add_button">Add Subtask</string>
-            <string name="ma_vproj_view_button">View Subtask</string>
-            <string name="ma_vproj_delete_button">Delete Subtask</string>
-            <string name="ma_subtask_LV_item_name">Subtask Name</string>
-            <string name="ma_subtask_LV_item_dueDate">Subtask Due Date</string>
-                <!-- Manager Edit Project View -->
-                <string name="ma_eproj_dueDateTV">Choose a due date</string>
-                <string name="ma_eproj_nameTV">Enter project name</string>
-                <string name="ma_eproj_descriptionTV">Enter project description</string>
-                <string name="ma_eproj_save_button">Save Project</string>
-                <!-- Manager View Subtask View -->
-                <string name="ma_vsub_nameTV">Subtask Name</string>
-                <string name="ma_vsub_dueDateTV">Subtask Due Date</string>
-                <string name="ma_vsub_descriptionTV">Subtask Description</string>
-                <string name="ma_vsub_edit_button">Edit Subtask</string>
-                    <!-- Manager Edit Subtask View -->
-                    <string name="ma_esub_dueDateTV">Choose a due date</string>
-                    <string name="ma_esub_nameTV">Enter subtask name</string>
-                    <string name="ma_esub_descriptionTV">Enter subtask description</string>
-                    <string name="ma_esub_save_button">Save Subtask</string>
-                <!-- Manager Add Subtask View -->
-                <string name="ma_asub_dueDateTV">Choose a due date</string>
-                <string name="ma_asub_nameTV">Enter subtask name</string>
-                <string name="ma_asub_descriptionTV">Enter subtask description</string>
-                <string name="ma_asub_add_button">Add Subtask</string>
+    <!-- Manager Home View -->
+    <string name="ma_view_project_button">View Project</string>
+    <string name="ma_delete_project_button">Delete Project</string>
+    <string name="ma_add_project_button">Add Project</string>
+    <string name="ma_project_LV_item_name">Project Name</string>
+    <string name="ma_project_LV_item_dueDate">Project Due Date</string>
+    <!-- Manager View Project View -->
+    <string name="ma_vproj_dueDateTV">Project Due Date</string>
+    <string name="ma_vproj_nameTV">Project Name</string>
+    <string name="ma_vproj_descriptionTV">Project Description</string>
+    <string name="ma_vproj_subtasksTV">Subtasks:</string>
+    <string name="ma_vproj_edit_button">Edit Project</string>
+    <string name="ma_vproj_add_button">Add Subtask</string>
+    <string name="ma_vproj_view_button">View Subtask</string>
+    <string name="ma_vproj_delete_button">Delete Subtask</string>
+    <string name="ma_subtask_LV_item_name">Subtask Name</string>
+    <string name="ma_subtask_LV_item_dueDate">Subtask Due Date</string>
+    <!-- Manager Edit Project View -->
+    <string name="ma_eproj_dueDateTV">Choose a due date</string>
+    <string name="ma_eproj_nameTV">Enter project name</string>
+    <string name="ma_eproj_descriptionTV">Enter project description</string>
+    <string name="ma_eproj_save_button">Save Project</string>
+    <!-- Manager View Subtask View -->
+    <string name="ma_vsub_nameTV">Subtask Name</string>
+    <string name="ma_vsub_dueDateTV">Subtask Due Date</string>
+    <string name="ma_vsub_descriptionTV">Subtask Description</string>
+    <string name="ma_vsub_edit_button">Edit Subtask</string>
+    <!-- Manager Edit Subtask View -->
+    <string name="ma_esub_dueDateTV">Choose a due date</string>
+    <string name="ma_esub_nameTV">Enter subtask name</string>
+    <string name="ma_esub_descriptionTV">Enter subtask description</string>
+    <string name="ma_esub_save_button">Save Subtask</string>
+    <!-- Manager Add Subtask View -->
+    <string name="ma_asub_dueDateTV">Choose a due date</string>
+    <string name="ma_asub_nameTV">Enter subtask name</string>
+    <string name="ma_asub_descriptionTV">Enter subtask description</string>
+    <string name="ma_asub_add_button">Add Subtask</string>
 
-            <!-- Manager Add Project View -->
-            <string name="ma_aproj_dueDateTV">Choose a due date</string>
-            <string name="ma_aproj_nameTV">Enter project name</string>
-            <string name="ma_aproj_descriptionTV">Enter project description</string>
-            <string name="ma_aproj_add_button">Add Project</string>
+    <!-- Manager Add Project View -->
+    <string name="ma_aproj_dueDateTV">Choose a due date</string>
+    <string name="ma_aproj_nameTV">Enter project name</string>
+    <string name="ma_aproj_descriptionTV">Enter project description</string>
+    <string name="ma_aproj_add_button">Add Project</string>
 
     <!-- Brian -->
     <string name="ma_brian_go_text">remindeR</string>
-    <string name="ma_brian_reminder_desc">IS BRIAN EVER GOING TO DELIVER. STAY TUNED</string>
+    <string name="ma_brian_reminder_desc">IS BRIAN EVER GOING TO DELIVER? STAY TUNED</string>
 
 
 </resources>

@@ -29,6 +29,12 @@ public class DBHelper extends SQLiteOpenHelper
     private static final int DATABASE_VERSION = 1;
 
     // ************************************ DATABASE TABLES ****************************************
+    // Templates Table
+    private static final String TEMPLATE_TABLE_NAME = "templates";
+    private static final String[] TEMPLATE_FIELD_NAMES = { "_id", "name", "summary", "location", "description", "start_time", "end_time" };
+    private static final String[] TEMPLATE_FIELD_TYPES = { " INTEGER PRIMARY KEY AUTOINCREMENT, ", " TEXT, ", " TEXT, ",
+            " TEXT,", " TEXT,", " TEXT,", " TEXT" };
+
     // Project Table
     private static final String PROJECTS_TABLE_NAME = "projects";
     private static final String[] PROJECTS_FIELD_NAMES = {"proj_id", "name", "description", "due_date", "subtasks"};
@@ -58,6 +64,7 @@ public class DBHelper extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase db)
     {
+        db.execSQL(createTable(TEMPLATE_TABLE_NAME, TEMPLATE_FIELD_NAMES, TEMPLATE_FIELD_TYPES));
         db.execSQL(createTable(PROJECTS_TABLE_NAME, PROJECTS_FIELD_NAMES, PROJECTS_FIELD_TYPES));
         db.execSQL(createTable(SUBTASKS_TABLE_NAME, SUBTASKS_FIELD_NAMES, SUBTASKS_FIELD_TYPES));
         db.execSQL(createTable(PROJ_SUB_TABLE_NAME, PROJ_SUB_FIELD_NAMES, PROJ_SUB_FIELD_TYPES));
@@ -74,7 +81,7 @@ public class DBHelper extends SQLiteOpenHelper
      */
     private String createTable(String tableName, String[] fieldNames, String[] fieldTypes)
     {
-        StringBuilder createSQL = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
+        StringBuilder createSQL = new StringBuilder("CREATE TABLE ");
         createSQL.append(tableName).append("(");
         for (int i = 0; i < fieldNames.length; i++)
             createSQL.append(fieldNames[i]).append(" ").append(fieldTypes[i])
@@ -488,4 +495,22 @@ public class DBHelper extends SQLiteOpenHelper
     }
 
 
+    //*********************************** TEMPLATE METHODS ******************************************
+    public Cursor getAllTemplatesDB() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TEMPLATE_TABLE_NAME, TEMPLATE_FIELD_NAMES, null, null, null, null, null, null);
+        return cursor;
+    }
+
+    public void addTemplateDB(Template template) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TEMPLATE_FIELD_NAMES[1], template.getmName());
+        values.put(TEMPLATE_FIELD_NAMES[2], template.getmSummary());
+        values.put(TEMPLATE_FIELD_NAMES[3], template.getmLocation());
+        values.put(TEMPLATE_FIELD_NAMES[4], template.getmDescription());
+        values.put(TEMPLATE_FIELD_NAMES[5], template.getmStartTime());
+        values.put(TEMPLATE_FIELD_NAMES[6], template.getmEndTime());
+        db.insert(TEMPLATE_TABLE_NAME, null, values);
+    }
 }

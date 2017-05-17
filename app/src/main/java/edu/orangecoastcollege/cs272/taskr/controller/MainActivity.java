@@ -43,6 +43,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.orangecoastcollege.cs272.taskr.R;
+import edu.orangecoastcollege.cs272.taskr.model.DBHelper;
+import edu.orangecoastcollege.cs272.taskr.view.scheduler.SchedulerAddTemplate;
+import edu.orangecoastcollege.cs272.taskr.view.scheduler.SchedulerHome;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -68,12 +71,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // Calendar insertion
     Event mEvent;
 
+    // Database
+    //Controller controller = Controller.getInstance();
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getApplicationContext();
 
         /* Button Listeners */
         findViewById(R.id.sign_in_button).setOnClickListener(this);
@@ -120,7 +128,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 signIn();
                 break;
             case R.id.ma_vincent_scheduler_button:
-                setContentView(R.layout.scheduler_home);
+                Intent changeActivity = new Intent(this, SchedulerHome.class);
+                startActivity(changeActivity);
                 break;
             case R.id.ma_derek_manager_button:
                 Intent changeActivity = new Intent(this, ViewAllProjectsActivity.class);
@@ -174,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (!isDeviceOnline()) {
             mLoginStatus.setText(R.string.ma_vincent_no_network);
         } else {
-
+            mLoginStatus.setText("Success");
         }
     }
 
@@ -296,8 +305,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private class MakeRequestTask extends AsyncTask<Void, Void, Boolean> {
         private com.google.api.services.calendar.Calendar mService = null;
         private Exception mLastError = null;
-
-        MakeRequestTask(GoogleAccountCredential credential) {
+       MakeRequestTask(GoogleAccountCredential credential) {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             mService = new com.google.api.services.calendar.Calendar.Builder(
@@ -305,8 +313,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .setApplicationName("Google Calendar API Android Quickstart")
                     .build();
         }
-
-        /**
+       /**
          * Background task to call Google Calendar API.
          * @param params no parameters needed for this task.
          */
@@ -321,38 +328,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return null;
             }
         }
-
-        /**
-         * Fetch a list of the next 10 events from the primary calendar.
-         * @return List of Strings describing returned events.
-         * @throws IOException
-         */
-        private List<String> getDataFromApi() throws IOException {
-            // List the next 10 events from the primary calendar.
-            DateTime now = new DateTime(System.currentTimeMillis());
-            List<String> eventStrings = new ArrayList<String>();
-            Events events = mService.events().list("primary")
-                    .setMaxResults(10)
-                    .setTimeMin(now)
-                    .setOrderBy("startTime")
-                    .setSingleEvents(true)
-                    .execute();
-            List<Event> items = events.getItems();
-
-            for (Event event : items) {
-                DateTime start = event.getStart().getDateTime();
-                if (start == null) {
-                    // All-day events don't have start times, so just use
-                    // the start date.
-                    start = event.getStart().getDate();
-                }
-                eventStrings.add(
-                        String.format("%s (%s)", event.getSummary(), start));
-            }
-            return eventStrings;
-        }
-
-        private Boolean insertEvent() {
+       private Boolean insertEvent() {
             try {
                     if (mEvent != null) {
                         Event event = mEvent;
@@ -361,20 +337,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            return true;
+           return true;
         }
-
-
-        @Override
+       @Override
         protected void onPreExecute() {
         }
-
-        @Override
+       @Override
         protected void onPostExecute(Boolean output) {
         }
-
-        @Override
+       @Override
         protected void onCancelled() {
             if (mLastError != null) {
                 if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {

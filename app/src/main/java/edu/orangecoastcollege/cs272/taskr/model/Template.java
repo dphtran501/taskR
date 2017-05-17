@@ -16,6 +16,7 @@ public class Template {
     private String mEndTime;
     private String mCalendarId;
     private TimeZone tz;
+    private int mId;
 
     public Template(String name, String summary, String location, String description, String startTime, String endTime) {
         this.mName = name;
@@ -25,6 +26,7 @@ public class Template {
         this.mStartTime = startTime;
         this.mEndTime = endTime;
         this.mCalendarId = "primary";
+        this.mId = -1;
     }
 
     public void setmSummary(String mSummary) {
@@ -90,6 +92,14 @@ public class Template {
 
     public void setmName(String mName) {
         this.mName = mName;
+    }
+
+    public int getmId() {
+        return mId;
+    }
+
+    public void setmId(int mId) {
+        this.mId = mId;
     }
 
     @Override

@@ -1,21 +1,21 @@
 package edu.orangecoastcollege.cs272.taskr.controller;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import edu.orangecoastcollege.cs272.taskr.R;
 
-import edu.orangecoastcollege.cs272.taskr.model.DBHelper;
-import edu.orangecoastcollege.cs272.taskr.model.Project;
-import edu.orangecoastcollege.cs272.taskr.model.Subtask;
+import edu.orangecoastcollege.cs272.taskr.model.manager.Project;
+import edu.orangecoastcollege.cs272.taskr.model.manager.ProjectModel;
+import edu.orangecoastcollege.cs272.taskr.model.manager.RelatedSubtasksModel;
+import edu.orangecoastcollege.cs272.taskr.model.manager.Subtask;
+import edu.orangecoastcollege.cs272.taskr.model.manager.SubtaskModel;
 import edu.orangecoastcollege.cs272.taskr.view.ProjectListAdapter;
 
 /**
@@ -30,13 +30,12 @@ import edu.orangecoastcollege.cs272.taskr.view.ProjectListAdapter;
  */
 public class ViewAllProjectsActivity extends AppCompatActivity implements View.OnClickListener
 {
-    private DBHelper db;
 
     static ProjectListAdapter adaptProject;
     private ListView allProjectsLV;
     static ArrayList<Project> allProjectsList;
-
     private Project selectedProject;
+    DatabaseController dbc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -46,8 +45,13 @@ public class ViewAllProjectsActivity extends AppCompatActivity implements View.O
         setContentView(R.layout.ma_home);
 
         // list and list view
-        db = new DBHelper(this);
-        allProjectsList = db.getAllProjects();
+        dbc = DatabaseController.getInstance(this);
+
+        dbc.openDatabase();
+        allProjectsList = ProjectModel.getAllProjects(dbc);
+        dbc.close();
+
+
         allProjectsLV = (ListView) findViewById(R.id.ma_projectsLV);
         adaptProject = new ProjectListAdapter(this, R.layout.ma_project_list_item, allProjectsList);
         allProjectsLV.setAdapter(adaptProject);
@@ -126,17 +130,27 @@ public class ViewAllProjectsActivity extends AppCompatActivity implements View.O
         if (p.hasSubtasks())
         {
             // Retrieve all related subtasks before deleting their relations in the relation table
-            ArrayList<Subtask> relatedSubtasks = db.getSubsOfProj(p);
-            db.deleteSubsOfProj(p.getID());
+            dbc.openDatabase();
+            ArrayList<Subtask> relatedSubtasks = RelatedSubtasksModel.getSubsOfProj(dbc, p);
+            dbc.close();
+
+            dbc.openDatabase();
+            RelatedSubtasksModel.deleteSubsOfProj(dbc, p.getID());
+            dbc.close();
 
             // Delete related subtasks from database
             if (!relatedSubtasks.isEmpty())
-                for (Subtask s : relatedSubtasks)
-                    db.deleteSubtask(s);
+
+                for (Subtask s : relatedSubtasks) {
+                    SubtaskModel.deleteSubtask(dbc, s);
+                }
+
         }
 
         // Delete project from database
-        db.deleteProject(p);
+        dbc.openDatabase();
+        ProjectModel.deleteProject(dbc, p);
+        dbc.close();
 
         // Reset list and list view
         allProjectsList.remove(p);

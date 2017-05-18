@@ -11,8 +11,9 @@ import java.util.ArrayList;
 
 import edu.orangecoastcollege.cs272.taskr.R;
 import edu.orangecoastcollege.cs272.taskr.model.DBHelper;
-import edu.orangecoastcollege.cs272.taskr.model.Project;
-import edu.orangecoastcollege.cs272.taskr.model.Subtask;
+import edu.orangecoastcollege.cs272.taskr.model.manager.Project;
+import edu.orangecoastcollege.cs272.taskr.model.manager.RelatedSubtasksModel;
+import edu.orangecoastcollege.cs272.taskr.model.manager.Subtask;
 import edu.orangecoastcollege.cs272.taskr.view.SubtaskListAdapter;
 
 /**
@@ -29,11 +30,11 @@ import edu.orangecoastcollege.cs272.taskr.view.SubtaskListAdapter;
 
 public class ViewProjectActivity extends AppCompatActivity implements View.OnClickListener
 {
-    private DBHelper db;
 
     static SubtaskListAdapter adaptSubtask;
     private ListView allSubsOfProjectLV;
     static ArrayList<Subtask> allSubsOfProjectList;
+    DatabaseController dbc;
 
     private Subtask selectedSubtask;
 
@@ -67,8 +68,12 @@ public class ViewProjectActivity extends AppCompatActivity implements View.OnCli
         projectDescriptionTV.setText(projectDescription);
 
         // list and list view
-        db = new DBHelper(this);
-        allSubsOfProjectList = db.getSubsOfProj(project);
+        dbc = DatabaseController.getInstance(this);
+
+        dbc.openDatabase();
+        allSubsOfProjectList = RelatedSubtasksModel.getSubsOfProj(dbc, project);
+        dbc.close();
+
         allSubsOfProjectLV = (ListView) findViewById(R.id.ma_projectSubsLV);
         adaptSubtask = new SubtaskListAdapter(this, R.layout.ma_subtask_list_item, allSubsOfProjectList);
         allSubsOfProjectLV.setAdapter(adaptSubtask);

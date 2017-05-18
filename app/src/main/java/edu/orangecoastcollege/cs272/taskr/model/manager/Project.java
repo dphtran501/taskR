@@ -1,4 +1,4 @@
-package edu.orangecoastcollege.cs272.taskr.model;
+package edu.orangecoastcollege.cs272.taskr.model.manager;
 
 /**
  * The <code>Project</code> class represents a project with a deadline and with possible subtasks
@@ -10,10 +10,6 @@ package edu.orangecoastcollege.cs272.taskr.model;
  */
 public class Project extends SubtaskedAssignment
 {
-
-    private static final String PROJECTS_TABLE_NAME = "projects";
-    public static final String[] PROJECTS_FIELD_NAMES = {"proj_id", "name", "description", "due_date", "subtasks"};
-    public static final String[] PROJECTS_FIELD_TYPES = {"INTEGER PRIMARY KEY AUTOINCREMENT", "TEXT", "TEXT", "TEXT", "INTEGER"};
 
     /**
      * Creates a new <code>Project</code> object.

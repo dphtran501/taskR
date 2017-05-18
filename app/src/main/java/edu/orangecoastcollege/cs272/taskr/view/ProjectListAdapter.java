@@ -14,7 +14,7 @@ import java.util.List;
 
 import edu.orangecoastcollege.cs272.taskr.R;
 
-import edu.orangecoastcollege.cs272.taskr.model.Project;
+import edu.orangecoastcollege.cs272.taskr.model.manager.Project;
 
 /**
  * Helper class to provide custom adapter for the <code>Project</code> list.

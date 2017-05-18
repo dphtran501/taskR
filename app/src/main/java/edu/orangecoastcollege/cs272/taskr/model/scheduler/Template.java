@@ -1,4 +1,4 @@
-package edu.orangecoastcollege.cs272.taskr.model;
+package edu.orangecoastcollege.cs272.taskr.model.scheduler;
 import android.icu.util.TimeZone;
 
 /**
@@ -99,12 +99,5 @@ public class Template {
 
     public void setmId(int mId) {
         this.mId = mId;
-    }
-
-    @Override
-    public String toString() {
-        return "Template{" +
-                "mName='" + mName + '\'' +
-                '}';
     }
 }

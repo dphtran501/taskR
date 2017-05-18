@@ -2,17 +2,15 @@ package edu.orangecoastcollege.cs272.taskr.controller;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 
-import java.util.ArrayList;
-
-import edu.orangecoastcollege.cs272.taskr.model.Template;
-import edu.orangecoastcollege.cs272.taskr.model.Subtask;
-import edu.orangecoastcollege.cs272.taskr.model.TemplateModel;
+import edu.orangecoastcollege.cs272.taskr.model.manager.ProjectModel;
+import edu.orangecoastcollege.cs272.taskr.model.manager.RelatedSubtasksModel;
+import edu.orangecoastcollege.cs272.taskr.model.manager.SubtaskModel;
+import edu.orangecoastcollege.cs272.taskr.model.scheduler.TemplateModel;
 
 public final class DatabaseController extends SQLiteOpenHelper {
 
@@ -35,7 +33,11 @@ public final class DatabaseController extends SQLiteOpenHelper {
     private static DatabaseController instance = null;
 
     // Add you LocalDatabaseModels here.
-    private final LocalDatabaseModel[] models = new LocalDatabaseModel[]{new TemplateModel.Model(), new Subtask.Model()};
+    private final LocalDatabaseModel[] models = new LocalDatabaseModel[]{
+            new TemplateModel(),
+            new SubtaskModel(),
+            new ProjectModel(),
+            new RelatedSubtasksModel()};
 
 
     public synchronized static DatabaseController getInstance(Context context) {

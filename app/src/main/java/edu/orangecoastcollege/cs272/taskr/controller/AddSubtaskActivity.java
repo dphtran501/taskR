@@ -9,8 +9,8 @@ import android.widget.EditText;
 
 import edu.orangecoastcollege.cs272.taskr.R;
 import edu.orangecoastcollege.cs272.taskr.model.DBHelper;
-import edu.orangecoastcollege.cs272.taskr.model.Project;
-import edu.orangecoastcollege.cs272.taskr.model.Subtask;
+import edu.orangecoastcollege.cs272.taskr.model.manager.Subtask;
+import edu.orangecoastcollege.cs272.taskr.model.manager.SubtaskModel;
 
 /**
  * Represents the activity view that allows the user to add a subtask to a project in the database,
@@ -27,6 +27,7 @@ public class AddSubtaskActivity extends AppCompatActivity implements View.OnClic
     EditText nameET;
     EditText descriptionET;
     DatePicker dueDateDP;
+    DatabaseController dbc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -38,7 +39,7 @@ public class AddSubtaskActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.ma_add_subtask);
 
         // Initialize database
-        db = new DBHelper(this);
+        dbc = DatabaseController.getInstance(this);
 
         // Initialize EditText and DatePicker
         nameET = (EditText) findViewById(R.id.ma_asub_nameET);
@@ -87,7 +88,10 @@ public class AddSubtaskActivity extends AppCompatActivity implements View.OnClic
         String dueDate = datePickerToString(dueDateDP);
         // Add subtask to database (id -1 is only temporary here)
         Subtask newSubtask = new Subtask(-1, name, description, dueDate);
-        int subID = db.addSubtask(newSubtask);
+
+        dbc.openDatabase();
+        int subID = SubtaskModel.save(dbc, newSubtask);
+        dbc.close();
 
         // TODO: after adding subtask to database, set project hasSubtasks to true and add relation to database
 /*

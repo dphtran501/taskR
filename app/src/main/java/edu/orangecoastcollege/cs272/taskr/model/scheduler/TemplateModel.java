@@ -1,4 +1,4 @@
-package edu.orangecoastcollege.cs272.taskr.model;
+package edu.orangecoastcollege.cs272.taskr.model.scheduler;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -12,37 +12,35 @@ import edu.orangecoastcollege.cs272.taskr.controller.DatabaseController;
  * Created by vietn on 5/17/2017.
  */
 
-public class TemplateModel {
+public class TemplateModel extends DatabaseController.LocalDatabaseModel {
+
+
     private static final String TEMPLATE_TABLE_NAME = "templates";
-    public static final String[] TEMPLATE_FIELD_NAMES = { "_id", "name", "summary", "location", "description", "start_time", "end_time" };
-    public static final String[] TEMPLATE_FIELD_TYPES = { " INTEGER PRIMARY KEY AUTOINCREMENT, ", " TEXT, ", " TEXT, ",
+    private static final String[] TEMPLATE_FIELD_NAMES = { "_id", "name", "summary", "location", "description", "start_time", "end_time" };
+    private static final String[] TEMPLATE_FIELD_TYPES = { " INTEGER PRIMARY KEY AUTOINCREMENT, ", " TEXT, ", " TEXT, ",
             " TEXT,", " TEXT,", " TEXT,", " TEXT" };
 
 
 
-    public static class Model extends DatabaseController.LocalDatabaseModel {
+    public TemplateModel(){}
 
-        public Model(){
-        }
+    @Override
+    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion){
+        database.execSQL("DROP TABLE IF EXISTS templates");
+        onCreate(database);
+    }
 
-        @Override
-        public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion){
-            database.execSQL("DROP TABLE IF EXISTS templates");
-            onCreate(database);
-        }
-        @Override
-        public void onCreate(SQLiteDatabase database){
-            String createQuery = "CREATE TABLE " + "templates" + "("
-                    + TEMPLATE_FIELD_NAMES[0] + TEMPLATE_FIELD_TYPES[0]
-                    + TEMPLATE_FIELD_NAMES[1] + TEMPLATE_FIELD_TYPES[1]
-                    + TEMPLATE_FIELD_NAMES[2] + TEMPLATE_FIELD_TYPES[2]
-                    + TEMPLATE_FIELD_NAMES[3] + TEMPLATE_FIELD_TYPES[3]
-                    + TEMPLATE_FIELD_NAMES[4] + TEMPLATE_FIELD_TYPES[4]
-                    + TEMPLATE_FIELD_NAMES[5] + TEMPLATE_FIELD_TYPES[5]
-                    + TEMPLATE_FIELD_NAMES[6] + TEMPLATE_FIELD_TYPES[6] + ")";
-
-            database.execSQL(createQuery);
-        }
+    @Override
+    public void onCreate(SQLiteDatabase database){
+        String createQuery = "CREATE TABLE IF NOT EXISTS " + TEMPLATE_TABLE_NAME + "("
+                + TEMPLATE_FIELD_NAMES[0] + TEMPLATE_FIELD_TYPES[0]
+                + TEMPLATE_FIELD_NAMES[1] + TEMPLATE_FIELD_TYPES[1]
+                + TEMPLATE_FIELD_NAMES[2] + TEMPLATE_FIELD_TYPES[2]
+                + TEMPLATE_FIELD_NAMES[3] + TEMPLATE_FIELD_TYPES[3]
+                + TEMPLATE_FIELD_NAMES[4] + TEMPLATE_FIELD_TYPES[4]
+                + TEMPLATE_FIELD_NAMES[5] + TEMPLATE_FIELD_TYPES[5]
+                + TEMPLATE_FIELD_NAMES[6] + TEMPLATE_FIELD_TYPES[6] + ")";
+        database.execSQL(createQuery);
     }
 
     public static void save(DatabaseController db, Template template){
@@ -62,7 +60,7 @@ public class TemplateModel {
         String[] queryById = { String.valueOf(id)};
 
         SQLiteDatabase database = db.database();
-        Cursor cursor = database.query("templates", TEMPLATE_FIELD_NAMES, TEMPLATE_FIELD_NAMES[0]+"=?", queryById, null, null, null, null);
+        Cursor cursor = database.query(TEMPLATE_TABLE_NAME, TEMPLATE_FIELD_NAMES, TEMPLATE_FIELD_NAMES[0]+"=?", queryById, null, null, null, null);
 
         if (cursor != null) {
             cursor.moveToFirst();
@@ -84,7 +82,7 @@ public class TemplateModel {
     public static ArrayList<Template> getAllTemplates(DatabaseController db) {
         ArrayList<Template> templatesList = new ArrayList<>();
         SQLiteDatabase database = db.database();
-        Cursor cursor = database.query("templates", TEMPLATE_FIELD_NAMES, null, null, null, null, null, null);
+        Cursor cursor = database.query(TEMPLATE_TABLE_NAME, TEMPLATE_FIELD_NAMES, null, null, null, null, null, null);
 
         int count = 1;
 

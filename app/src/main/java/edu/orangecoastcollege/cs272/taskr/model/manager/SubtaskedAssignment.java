@@ -1,4 +1,4 @@
-package edu.orangecoastcollege.cs272.taskr.model;
+package edu.orangecoastcollege.cs272.taskr.model.manager;
 
 /**
  * The <code>SubtaskedAssignment</code> class represents an assignment with a deadline and with

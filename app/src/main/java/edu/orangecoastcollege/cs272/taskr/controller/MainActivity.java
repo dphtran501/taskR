@@ -80,8 +80,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DatabaseController db = DatabaseController.getInstance(this);
-
         /* Button Listeners */
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         findViewById(R.id.ma_vincent_scheduler_button).setOnClickListener(this);

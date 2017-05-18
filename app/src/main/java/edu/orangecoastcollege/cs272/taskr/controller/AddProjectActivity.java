@@ -9,7 +9,8 @@ import android.widget.EditText;
 
 import edu.orangecoastcollege.cs272.taskr.R;
 import edu.orangecoastcollege.cs272.taskr.model.DBHelper;
-import edu.orangecoastcollege.cs272.taskr.model.Project;
+import edu.orangecoastcollege.cs272.taskr.model.manager.Project;
+import edu.orangecoastcollege.cs272.taskr.model.manager.ProjectModel;
 
 /**
  * Represents the activity view that allows the user to add a project to the database.
@@ -21,11 +22,11 @@ import edu.orangecoastcollege.cs272.taskr.model.Project;
 
 public class AddProjectActivity extends AppCompatActivity implements View.OnClickListener
 {
-    private DBHelper db;
 
     EditText nameET;
     EditText descriptionET;
     DatePicker dueDateDP;
+    DatabaseController dbc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -35,7 +36,7 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.ma_add_project);
 
         // Initialize database
-        db = new DBHelper(this);
+        dbc = DatabaseController.getInstance(this);
 
         // Initialize EditText and DatePicker
         nameET = (EditText) findViewById(R.id.ma_aproj_nameET);
@@ -81,7 +82,11 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
         boolean hasSubtasks = false;    // have to change if plan to add subtasks in this activity too
         // Add project to database (id -1 is only temporary here)
         Project newProject = new Project(-1, name, description, dueDate, hasSubtasks);
-        int projID = db.addProject(newProject);
+
+        dbc.openDatabase();;
+        int projID = ProjectModel.save(dbc, newProject);
+        dbc.close();
+
         // Update list and list view
         ViewAllProjectsActivity.allProjectsList.add(new Project(projID, name, description, dueDate, hasSubtasks));
         ViewAllProjectsActivity.adaptProject.notifyDataSetChanged();

@@ -8,7 +8,8 @@ import android.widget.TextView;
 
 import edu.orangecoastcollege.cs272.taskr.R;
 import edu.orangecoastcollege.cs272.taskr.controller.DatabaseController;
-import edu.orangecoastcollege.cs272.taskr.model.Template;
+import edu.orangecoastcollege.cs272.taskr.model.scheduler.Template;
+import edu.orangecoastcollege.cs272.taskr.model.scheduler.TemplateModel;
 
 public class SchedulerAddTemplate extends AppCompatActivity implements View.OnClickListener {
 
@@ -19,7 +20,7 @@ public class SchedulerAddTemplate extends AppCompatActivity implements View.OnCl
     boolean startTimeToggle;
     boolean endTimeToggle;
     TextView startTime;
-    DatabaseController controller;
+    DatabaseController dbc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class SchedulerAddTemplate extends AppCompatActivity implements View.OnCl
         findViewById(R.id.s_save_new).setOnClickListener(this);
         findViewById(R.id.s_toggle_startTime).setOnClickListener(this);
         findViewById(R.id.s_toggle_endTime).setOnClickListener(this);
-        controller = DatabaseController.getInstance(this);
+        dbc = DatabaseController.getInstance(this);
 
         endTimeToggle = false;
         startTimeToggle = false;
@@ -55,9 +56,9 @@ public class SchedulerAddTemplate extends AppCompatActivity implements View.OnCl
         //    endTime = "";
 
         Template template = new Template(templateName, eventName, description, location, "12:00", "12:00");
-        controller.openDatabase();
-        template.save(controller);
-        controller.close();
+        dbc.openDatabase();
+        TemplateModel.save(dbc, template);
+        dbc.close();
         }
 
     @Override

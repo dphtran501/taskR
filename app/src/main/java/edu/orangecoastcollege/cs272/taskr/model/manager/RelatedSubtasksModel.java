@@ -15,22 +15,25 @@ import edu.orangecoastcollege.cs272.taskr.controller.DatabaseController;
  * Created by vietn on 5/17/2017.
  */
 
-public class RelatedSubtasksModel extends DatabaseController.LocalDatabaseModel {
+public class RelatedSubtasksModel extends DatabaseController.LocalDatabaseModel
+{
 
     private static final String PROJ_SUB_TABLE_NAME = "project_subtask";
     private static final String[] PROJ_SUB_FIELD_NAMES = {"proj_id", "sub_id"};
     private static final String[] PROJ_SUB_FIELD_TYPES = {" INTEGER, ", " INTEGER"};
 
 
-    public RelatedSubtasksModel(){
-    }
+    public RelatedSubtasksModel(){}
+
     @Override
-    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion){
+    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion)
+    {
         database.execSQL("DROP TABLE IF EXISTS " + PROJ_SUB_TABLE_NAME);
         onCreate(database);
     }
     @Override
-    public void onCreate(SQLiteDatabase database){
+    public void onCreate(SQLiteDatabase database)
+    {
         String createQuery = "CREATE TABLE IF NOT EXISTS " + PROJ_SUB_TABLE_NAME + "("
                 + PROJ_SUB_FIELD_NAMES[0] + PROJ_SUB_FIELD_TYPES[0]
                 + PROJ_SUB_FIELD_NAMES[1] + PROJ_SUB_FIELD_TYPES[1] + ")";
@@ -84,11 +87,8 @@ public class RelatedSubtasksModel extends DatabaseController.LocalDatabaseModel 
     {
         SQLiteDatabase db = dbc.database();
 
-        // Get from ProjectModel
-        String[] projFieldNames = ProjectModel.getProjectsFieldNames();
-
         // since subID is auto-incremented, it should be unique in this table
-        db.delete(PROJ_SUB_TABLE_NAME, projFieldNames[1] + "=?",
+        db.delete(PROJ_SUB_TABLE_NAME, PROJ_SUB_FIELD_NAMES[1] + "=?",
                 new String[] {String.valueOf(subID)});
     }
 
@@ -100,10 +100,7 @@ public class RelatedSubtasksModel extends DatabaseController.LocalDatabaseModel 
     {
         SQLiteDatabase db = dbc.database();
 
-        // Get from ProjectModel
-        String[] projFieldNames = ProjectModel.getProjectsFieldNames();
-
-        db.delete(PROJ_SUB_TABLE_NAME, projFieldNames[0] + "=?",
+        db.delete(PROJ_SUB_TABLE_NAME, PROJ_SUB_FIELD_NAMES[0] + "=?",
                 new String[] {String.valueOf(projID)});
     }
 

@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="edu.orangecoastcollege.cs272.taskr.controller.ViewProjectActivity">
+        tools:context="edu.orangecoastcollege.cs272.taskr.view.manager.ViewProjectActivity">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -61,7 +61,9 @@
             android:padding="10dp"
             android:divider="#CCCCCC"
             android:dividerHeight="1dp"
-            android:background="@drawable/border"/>
+            android:background="@drawable/border"
+            android:choiceMode="singleChoice"
+            android:listSelector="@android:color/holo_orange_light"/>
 
     </LinearLayout>
 

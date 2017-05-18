@@ -1,4 +1,4 @@
-package edu.orangecoastcollege.cs272.taskr.controller;
+package edu.orangecoastcollege.cs272.taskr.view.manager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import edu.orangecoastcollege.cs272.taskr.R;
-import edu.orangecoastcollege.cs272.taskr.model.DBHelper;
+import edu.orangecoastcollege.cs272.taskr.controller.DatabaseController;
+import edu.orangecoastcollege.cs272.taskr.model.manager.Project;
+import edu.orangecoastcollege.cs272.taskr.model.manager.ProjectModel;
+import edu.orangecoastcollege.cs272.taskr.model.manager.RelatedSubtasksModel;
 import edu.orangecoastcollege.cs272.taskr.model.manager.Subtask;
 import edu.orangecoastcollege.cs272.taskr.model.manager.SubtaskModel;
 
@@ -22,24 +25,31 @@ import edu.orangecoastcollege.cs272.taskr.model.manager.SubtaskModel;
  */
 public class AddSubtaskActivity extends AppCompatActivity implements View.OnClickListener
 {
-    private DBHelper db;
+    DatabaseController dbc;
 
     EditText nameET;
     EditText descriptionET;
     DatePicker dueDateDP;
-    DatabaseController dbc;
+
+    int relatedProjID;
+    Project relatedProject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        // TODO: NEED TO RETRIEVE PROJECT FROM VIEWPROJECTACTIVITY
-
         // Layout
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ma_add_subtask);
 
-        // Initialize database
+        // Controller instance
         dbc = DatabaseController.getInstance(this);
+
+        // Retrieve related project from ViewProjectActivity
+        Bundle extras = getIntent().getExtras();
+        relatedProjID = extras.getInt("projID");
+        dbc.openDatabase();
+        relatedProject = ProjectModel.getById(dbc, relatedProjID);
+        dbc.close();
 
         // Initialize EditText and DatePicker
         nameET = (EditText) findViewById(R.id.ma_asub_nameET);
@@ -48,10 +58,11 @@ public class AddSubtaskActivity extends AppCompatActivity implements View.OnClic
 
         // Set DatePicker (min date must be before current date)
         dueDateDP.setMinDate(System.currentTimeMillis() - 1000);
-        // TODO: need to set max date to due date of project
+        // TODO: set max date to project due date
 
         // Set up button to be associated with action
         findViewById(R.id.ma_asub_add_button).setOnClickListener(this);
+
     }
 
     // Associate button with actions
@@ -64,7 +75,7 @@ public class AddSubtaskActivity extends AppCompatActivity implements View.OnClic
             case R.id.ma_asub_add_button:
                 if (nameET.getText().toString() != null && !nameET.getText().toString().isEmpty())
                 {
-                    createSubtask();
+                    createSubtask(relatedProject);
                     intentChangeView = new Intent(this, ViewProjectActivity.class);
                     startActivity(intentChangeView);
                 }
@@ -72,33 +83,44 @@ public class AddSubtaskActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    // TODO: need to have project as a parameter for createSubtask to add to the relation table
-
     /**
      * Creates a <code>Subtask</code> using the field values in the EditText and DatePicker,
      * adds the new subtask to the subtask database, and adds the <code>Subtask</code> to the
      * related project's list of related subtasks. Also adds the relation between the new created
      * subtask and the project it belongs to the relationship table.
+     * @param p <code>Project</code> to add the <code>Subtask</code> to.
      */
-    private void createSubtask()
+    private void createSubtask(Project p)
     {
         // Retrieve data
         String name = nameET.getText().toString();
         String description = descriptionET.getText().toString();
         String dueDate = datePickerToString(dueDateDP);
+
         // Add subtask to database (id -1 is only temporary here)
         Subtask newSubtask = new Subtask(-1, name, description, dueDate);
-
         dbc.openDatabase();
         int subID = SubtaskModel.save(dbc, newSubtask);
         dbc.close();
 
-        // TODO: after adding subtask to database, set project hasSubtasks to true and add relation to database
-/*
+        // Set project hasSubtasks to true and add relation to database
+        p.setSubtasks(true);
+        dbc.openDatabase();
+        ProjectModel.updateProject(dbc, p);
+        dbc.close();
+        dbc.openDatabase();
+        RelatedSubtasksModel.addProjSub(dbc, p.getID(), subID);
+        dbc.close();
+
         // Update list and list view
-        ViewAllProjectsActivity.allProjectsList.add(new Project(projID, name, description, dueDate, hasSubtasks));
+        ViewProjectActivity.allSubsOfProjectList.add(new Subtask(subID, name, description, dueDate));
+        ViewProjectActivity.adaptSubtask.notifyDataSetChanged();
+        // Update list and list view for allProjectsList too since a project was updated
+        dbc.openDatabase();
+        ViewAllProjectsActivity.allProjectsList = ProjectModel.getAllProjects(dbc);
+        dbc.close();
         ViewAllProjectsActivity.adaptProject.notifyDataSetChanged();
-*/
+
     }
 
     /**

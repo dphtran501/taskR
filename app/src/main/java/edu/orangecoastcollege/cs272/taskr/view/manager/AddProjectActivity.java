@@ -1,4 +1,4 @@
-package edu.orangecoastcollege.cs272.taskr.controller;
+package edu.orangecoastcollege.cs272.taskr.view.manager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import edu.orangecoastcollege.cs272.taskr.R;
-import edu.orangecoastcollege.cs272.taskr.model.DBHelper;
+import edu.orangecoastcollege.cs272.taskr.controller.DatabaseController;
 import edu.orangecoastcollege.cs272.taskr.model.manager.Project;
 import edu.orangecoastcollege.cs272.taskr.model.manager.ProjectModel;
 
@@ -23,10 +23,11 @@ import edu.orangecoastcollege.cs272.taskr.model.manager.ProjectModel;
 public class AddProjectActivity extends AppCompatActivity implements View.OnClickListener
 {
 
+    DatabaseController dbc;
+
     EditText nameET;
     EditText descriptionET;
     DatePicker dueDateDP;
-    DatabaseController dbc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -35,7 +36,7 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ma_add_project);
 
-        // Initialize database
+        // Controller instance
         dbc = DatabaseController.getInstance(this);
 
         // Initialize EditText and DatePicker
@@ -79,12 +80,12 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
         String name = nameET.getText().toString();
         String description = descriptionET.getText().toString();
         String dueDate = datePickerToString(dueDateDP);
-        boolean hasSubtasks = false;    // have to change if plan to add subtasks in this activity too
+        boolean hasSubtasks = false;    // no subtasks when creating project for first time
+
         // Add project to database (id -1 is only temporary here)
         Project newProject = new Project(-1, name, description, dueDate, hasSubtasks);
-
-        dbc.openDatabase();;
-        int projID = ProjectModel.save(dbc, newProject);
+        dbc.openDatabase();
+        int projID = ProjectModel.save(dbc, newProject);    // generated project record id
         dbc.close();
 
         // Update list and list view

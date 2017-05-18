@@ -1,5 +1,6 @@
-package edu.orangecoastcollege.cs272.taskr.controller;
+package edu.orangecoastcollege.cs272.taskr.view.manager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,11 +11,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import edu.orangecoastcollege.cs272.taskr.R;
-import edu.orangecoastcollege.cs272.taskr.model.DBHelper;
+import edu.orangecoastcollege.cs272.taskr.controller.DatabaseController;
+import edu.orangecoastcollege.cs272.taskr.controller.ViewSubtaskActivity;
 import edu.orangecoastcollege.cs272.taskr.model.manager.Project;
+import edu.orangecoastcollege.cs272.taskr.model.manager.ProjectModel;
 import edu.orangecoastcollege.cs272.taskr.model.manager.RelatedSubtasksModel;
 import edu.orangecoastcollege.cs272.taskr.model.manager.Subtask;
-import edu.orangecoastcollege.cs272.taskr.view.SubtaskListAdapter;
+import edu.orangecoastcollege.cs272.taskr.model.manager.SubtaskModel;
 
 /**
  * Represents the activity view that allows the user to view the attributes of a specified project,
@@ -31,16 +34,20 @@ import edu.orangecoastcollege.cs272.taskr.view.SubtaskListAdapter;
 public class ViewProjectActivity extends AppCompatActivity implements View.OnClickListener
 {
 
+    DatabaseController dbc;
+
     static SubtaskListAdapter adaptSubtask;
     private ListView allSubsOfProjectLV;
     static ArrayList<Subtask> allSubsOfProjectList;
-    DatabaseController dbc;
 
     private Subtask selectedSubtask;
 
     TextView projectNameTV;
     TextView projectDueDateTV;
     TextView projectDescriptionTV;
+
+    int projectID;
+    Project project;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -49,31 +56,31 @@ public class ViewProjectActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ma_view_project);
 
-        // Retrieve selected project fields from ViewAllProjectsActivity
-        Bundle extras = getIntent().getExtras();
-        int projectID = extras.getInt("projectID");
-        String projectName = extras.getString("projectName");
-        String projectDueDate = extras.getString("projectDueDate");
-        String projectDescription = extras.getString("projectDescription");
-        boolean projectHasSubtasks = extras.getBoolean("projectHasSubtasks");
-        Project project = new Project(projectID, projectName, projectDescription, projectDueDate, projectHasSubtasks);
-
-        // Set project name, due date, and description in text view
-        projectNameTV = (TextView) findViewById(R.id.ma_vproj_nameTV);
-        projectDueDateTV = (TextView) findViewById(R.id.ma_vproj_dueDateTV);
-        projectDescriptionTV = (TextView) findViewById(R.id.ma_vproj_descriptionTV);
-        projectNameTV.setText(projectName);
-        String newDueDateTV = "Due: " + projectDueDate;
-        projectDueDateTV.setText(newDueDateTV);
-        projectDescriptionTV.setText(projectDescription);
-
-        // list and list view
+        // Controller instance
         dbc = DatabaseController.getInstance(this);
 
+        // Retrieve selected project from ViewAllProjectsActivity
+        Bundle extras = getIntent().getExtras();
+        projectID = extras.getInt("projectID");
+        dbc.openDatabase();
+        project = ProjectModel.getById(dbc, projectID);
+        dbc.close();
+
+        // Set project name, due date, and description in TextView to those of selected project
+        projectNameTV = (TextView) findViewById(R.id.ma_vproj_nameTV);
+        projectNameTV.setText(project.getName());
+        projectDueDateTV = (TextView) findViewById(R.id.ma_vproj_dueDateTV);
+        String newDueDateTV = "Due: " + project.getDueDate();
+        projectDueDateTV.setText(newDueDateTV);
+        projectDescriptionTV = (TextView) findViewById(R.id.ma_vproj_descriptionTV);
+        projectDescriptionTV.setText(project.getDescription());
+
+        // List of subtasks related to project
         dbc.openDatabase();
         allSubsOfProjectList = RelatedSubtasksModel.getSubsOfProj(dbc, project);
         dbc.close();
 
+        // List view of subtasks related to project
         allSubsOfProjectLV = (ListView) findViewById(R.id.ma_projectSubsLV);
         adaptSubtask = new SubtaskListAdapter(this, R.layout.ma_subtask_list_item, allSubsOfProjectList);
         allSubsOfProjectLV.setAdapter(adaptSubtask);
@@ -100,6 +107,50 @@ public class ViewProjectActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v)
     {
+        Intent intentChangeView;
+        switch (v.getId())
+        {
+            case R.id.ma_vproj_edit_button:
+                break;
+            case R.id.ma_vproj_view_button:
+                if (selectedSubtask != null)
+                {
+                    intentChangeView = new Intent(this, ViewSubtaskActivity.class);
+                    intentChangeView.putExtra("subID", selectedSubtask.getID());
+                    startActivity(intentChangeView);
+                }
+                break;
+            case R.id.ma_vproj_add_button:
+                intentChangeView = new Intent(this, AddSubtaskActivity.class);
+                intentChangeView.putExtra("projID", projectID);
+                startActivity(intentChangeView);
+                break;
+            case R.id.ma_vproj_delete_button:
+                if (selectedSubtask != null)
+                {
+                    deleteSubtaskFromDB(selectedSubtask);
+                    selectedSubtask = null;
+                }
+                break;
+        }
+    }
+
+    private void deleteSubtaskFromDB(Subtask s)
+    {
+        // Delete related project-subtask relationship from database
+        dbc.openDatabase();
+        RelatedSubtasksModel.deleteProjSub(dbc, s.getID());
+        dbc.close();
+
+        // Delete subtask from database
+        dbc.openDatabase();
+        SubtaskModel.deleteSubtask(dbc, s);
+        dbc.close();
+
+        // Reset list and list view
+        allSubsOfProjectList.remove(s);
+        adaptSubtask.notifyDataSetChanged();
 
     }
+
 }

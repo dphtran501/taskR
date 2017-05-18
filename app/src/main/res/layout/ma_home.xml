@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context="edu.orangecoastcollege.cs272.taskr.controller.ViewAllProjectsActivity">
+    tools:context="edu.orangecoastcollege.cs272.taskr.view.manager.ViewAllProjectsActivity">
 
     <ListView
         android:id="@+id/ma_projectsLV"

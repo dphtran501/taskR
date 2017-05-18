@@ -15,23 +15,25 @@ import edu.orangecoastcollege.cs272.taskr.controller.DatabaseController;
  * Created by vietn on 5/17/2017.
  */
 
-public class SubtaskModel extends DatabaseController.LocalDatabaseModel {
+public class SubtaskModel extends DatabaseController.LocalDatabaseModel
+{
 
 
     private static final String SUBTASKS_TABLE_NAME = "subtasks";
     private static final String[] SUBTASKS_FIELD_NAMES = {"sub_id", "name", "description", "due_date"};
     private static final String[] SUBTASKS_FIELD_TYPES = {" INTEGER PRIMARY KEY AUTOINCREMENT, ", " TEXT, ", " TEXT, ", " TEXT"};
 
-    public SubtaskModel(){
-    }
+    public SubtaskModel(){}
 
     @Override
-    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion){
+    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion)
+    {
         database.execSQL("DROP TABLE IF EXISTS " + SUBTASKS_TABLE_NAME);
         onCreate(database);
     }
     @Override
-    public void onCreate(SQLiteDatabase database){
+    public void onCreate(SQLiteDatabase database)
+    {
         String createQuery = "CREATE TABLE IF NOT EXISTS " + SUBTASKS_TABLE_NAME + "("
                 + SUBTASKS_FIELD_NAMES[0] + SUBTASKS_FIELD_TYPES[0]
                 + SUBTASKS_FIELD_NAMES[1] + SUBTASKS_FIELD_TYPES[1]
@@ -42,15 +44,15 @@ public class SubtaskModel extends DatabaseController.LocalDatabaseModel {
     }
 
 
-    public static Subtask getById(DatabaseController db, int key){
+    public static Subtask getById(DatabaseController db, int key)
+    {
         String[] queryById = { String.valueOf(key)};
 
         SQLiteDatabase database = db.database();
         Cursor c = database.query(SUBTASKS_TABLE_NAME, SUBTASKS_FIELD_NAMES, SUBTASKS_FIELD_NAMES[0]+"=?", queryById, null, null, null, null);
 
-        if (c != null) {
+        if (c != null)
             c.moveToFirst();
-        }
 
         int id = c.getInt(c.getColumnIndex(SUBTASKS_FIELD_NAMES[0]));
         String name = c.getString(c.getColumnIndex(SUBTASKS_FIELD_NAMES[1]));
@@ -61,7 +63,8 @@ public class SubtaskModel extends DatabaseController.LocalDatabaseModel {
         return new Subtask(id, name, description, dueDate);
     }
 
-    public static ArrayList<Subtask> getAllSubtasks(DatabaseController db) {
+    public static ArrayList<Subtask> getAllSubtasks(DatabaseController db)
+    {
         ArrayList<Subtask> subtasksList = new ArrayList<>();
         SQLiteDatabase database = db.database();
         Cursor c = database.query(SUBTASKS_TABLE_NAME, SUBTASKS_FIELD_NAMES, null, null, null, null, null, null);

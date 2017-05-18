@@ -7,9 +7,11 @@
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context="edu.orangecoastcollege.cs272.taskr.view.manager.AddSubtaskActivity">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -35,8 +37,7 @@
                 android:scaleX="0.8"
                 android:scaleY="0.8"
                 android:layout_marginTop="-30dp"
-                android:layout_marginBottom="-50dp"
-                />
+                android:layout_marginBottom="-50dp" />
         </LinearLayout>
 
         <LinearLayout

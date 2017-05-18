@@ -1,4 +1,4 @@
-package edu.orangecoastcollege.cs272.taskr.controller;
+package edu.orangecoastcollege.cs272.taskr.view.manager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,12 +11,12 @@ import java.util.ArrayList;
 
 import edu.orangecoastcollege.cs272.taskr.R;
 
+import edu.orangecoastcollege.cs272.taskr.controller.DatabaseController;
 import edu.orangecoastcollege.cs272.taskr.model.manager.Project;
 import edu.orangecoastcollege.cs272.taskr.model.manager.ProjectModel;
 import edu.orangecoastcollege.cs272.taskr.model.manager.RelatedSubtasksModel;
 import edu.orangecoastcollege.cs272.taskr.model.manager.Subtask;
 import edu.orangecoastcollege.cs272.taskr.model.manager.SubtaskModel;
-import edu.orangecoastcollege.cs272.taskr.view.ProjectListAdapter;
 
 /**
  * Represents the activity view that allows the user to view all <code>Project</code>s in the
@@ -31,27 +31,30 @@ import edu.orangecoastcollege.cs272.taskr.view.ProjectListAdapter;
 public class ViewAllProjectsActivity extends AppCompatActivity implements View.OnClickListener
 {
 
+    DatabaseController dbc;
+
+    static ArrayList<Project> allProjectsList;
     static ProjectListAdapter adaptProject;
     private ListView allProjectsLV;
-    static ArrayList<Project> allProjectsList;
+
     private Project selectedProject;
-    DatabaseController dbc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        // layout
+        // Layout
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ma_home);
 
-        // list and list view
+        // Controller instance
         dbc = DatabaseController.getInstance(this);
 
+        // All projects list
         dbc.openDatabase();
         allProjectsList = ProjectModel.getAllProjects(dbc);
         dbc.close();
 
-
+        // All projects list view
         allProjectsLV = (ListView) findViewById(R.id.ma_projectsLV);
         adaptProject = new ProjectListAdapter(this, R.layout.ma_project_list_item, allProjectsList);
         allProjectsLV.setAdapter(adaptProject);
@@ -81,15 +84,10 @@ public class ViewAllProjectsActivity extends AppCompatActivity implements View.O
         switch (v.getId())
         {
             case R.id.ma_view_project_button:
-                if (allProjectsLV.getSelectedItem() != null)
+                if (selectedProject != null)
                 {
-                    //Project selectedProject = getSelectedProject();
                     intentChangeView = new Intent(this, ViewProjectActivity.class);
                     intentChangeView.putExtra("projectID", selectedProject.getID());
-                    intentChangeView.putExtra("projectName", selectedProject.getName());
-                    intentChangeView.putExtra("projectDescription", selectedProject.getDescription());
-                    intentChangeView.putExtra("projectDueDate", selectedProject.getDueDate());
-                    intentChangeView.putExtra("projectHasSubtasks", selectedProject.hasSubtasks());
                     startActivity(intentChangeView);
                 }
                 break;
@@ -107,19 +105,6 @@ public class ViewAllProjectsActivity extends AppCompatActivity implements View.O
         }
     }
 
-
-    /**
-     * Gets the selected <code>Project</code> in the list view.
-     * @return Selected <code>Project</code> in the list view.
-     */
-    /*
-    private Project getSelectedProject()
-    {
-        int projectPos = allProjectsLV.getSelectedItemPosition();
-        return allProjectsList.get(projectPos);
-    }
-    */
-
     /**
      * Deletes a project and any related subtasks from the database.
      * @param p <code>Project</code> to delete.
@@ -133,16 +118,17 @@ public class ViewAllProjectsActivity extends AppCompatActivity implements View.O
             dbc.openDatabase();
             ArrayList<Subtask> relatedSubtasks = RelatedSubtasksModel.getSubsOfProj(dbc, p);
             dbc.close();
-
             dbc.openDatabase();
             RelatedSubtasksModel.deleteSubsOfProj(dbc, p.getID());
             dbc.close();
 
             // Delete related subtasks from database
             if (!relatedSubtasks.isEmpty())
-
-                for (Subtask s : relatedSubtasks) {
+                for (Subtask s : relatedSubtasks)
+                {
+                    dbc.openDatabase();
                     SubtaskModel.deleteSubtask(dbc, s);
+                    dbc.close();
                 }
 
         }

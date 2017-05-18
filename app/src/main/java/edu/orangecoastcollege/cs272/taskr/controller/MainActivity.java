@@ -11,7 +11,6 @@ import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -23,7 +22,6 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecovera
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
@@ -34,17 +32,12 @@ import com.google.android.gms.common.api.Scope;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.http.HttpTransport;
-import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.Events;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import edu.orangecoastcollege.cs272.taskr.R;
-import edu.orangecoastcollege.cs272.taskr.model.DBHelper;
-import edu.orangecoastcollege.cs272.taskr.view.scheduler.SchedulerAddTemplate;
+import edu.orangecoastcollege.cs272.taskr.view.manager.ViewAllProjectsActivity;
 import edu.orangecoastcollege.cs272.taskr.view.scheduler.SchedulerHome;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;

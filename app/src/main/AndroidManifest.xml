@@ -20,8 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".controller.ViewAllProjectsActivity"></activity>
-        <activity android:name=".controller.AddProjectActivity"></activity>
+        <activity android:name=".view.manager.ViewAllProjectsActivity"></activity>
+        <activity android:name=".view.manager.AddProjectActivity"></activity>
+        <activity android:name=".view.manager.ViewProjectActivity"></activity>
+        <activity android:name=".view.manager.AddSubtaskActivity"></activity>
         <activity
             android:name=".view.scheduler.SchedulerAddTemplate"
             android:parentActivityName=".controller.MainActivity"></activity>

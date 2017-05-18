@@ -1,4 +1,4 @@
-package edu.orangecoastcollege.cs272.taskr.view;
+package edu.orangecoastcollege.cs272.taskr.view.manager;
 
 import android.app.Activity;
 import android.content.Context;

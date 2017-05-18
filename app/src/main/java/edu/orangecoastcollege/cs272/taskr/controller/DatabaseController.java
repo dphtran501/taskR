@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import edu.orangecoastcollege.cs272.taskr.model.Template;
 import edu.orangecoastcollege.cs272.taskr.model.Subtask;
+import edu.orangecoastcollege.cs272.taskr.model.TemplateModel;
 
 public final class DatabaseController extends SQLiteOpenHelper {
 
@@ -34,7 +35,7 @@ public final class DatabaseController extends SQLiteOpenHelper {
     private static DatabaseController instance = null;
 
     // Add you LocalDatabaseModels here.
-    private final LocalDatabaseModel[] models = new LocalDatabaseModel[]{new Template.Model(), new Subtask.Model()};
+    private final LocalDatabaseModel[] models = new LocalDatabaseModel[]{new TemplateModel.Model(), new Subtask.Model()};
 
 
     public synchronized static DatabaseController getInstance(Context context) {

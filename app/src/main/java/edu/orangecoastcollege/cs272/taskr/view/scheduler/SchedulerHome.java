@@ -12,6 +12,7 @@ import android.widget.ListView;
 import edu.orangecoastcollege.cs272.taskr.controller.DatabaseController;
 import edu.orangecoastcollege.cs272.taskr.model.DBHelper;
 import edu.orangecoastcollege.cs272.taskr.model.Template;
+import edu.orangecoastcollege.cs272.taskr.model.TemplateModel;
 import edu.orangecoastcollege.cs272.taskr.view.scheduler.TemplateListAdapter;
 
 import java.util.ArrayList;
@@ -33,8 +34,10 @@ public class SchedulerHome extends AppCompatActivity implements View.OnClickList
         DatabaseController dbController = DatabaseController.getInstance(this);
 
         dbController.openDatabase();
-        allTemplatesList = Template.getAllTemplates(dbController);
+        allTemplatesList = TemplateModel.getAllTemplates(dbController);
         dbController.close();
+
+
         allTemplatesListLV = (ListView) findViewById(R.id.schedulerListView);
         adaptTemplate = new TemplateListAdapter(this, R.layout.scheduler_list_item, allTemplatesList);
         allTemplatesListLV.setAdapter(adaptTemplate);

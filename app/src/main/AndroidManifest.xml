@@ -20,13 +20,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.manager.ViewAllProjectsActivity"></activity>
-        <activity android:name=".view.manager.AddProjectActivity"></activity>
-        <activity android:name=".view.manager.ViewProjectActivity"></activity>
-        <activity android:name=".view.manager.AddSubtaskActivity"></activity>
-        <activity android:name=".view.manager.ViewSubtaskActivity"></activity>
-        <activity android:name=".view.manager.EditSubtaskActivity"></activity>
-        <activity android:name=".view.manager.EditProjectActivity"></activity>
+        <activity android:name=".view.manager.ViewAllProjectsActivity"
+            android:label="@string/ma_home_label"
+            android:parentActivityName=".controller.MainActivity"></activity>
+        <activity android:name=".view.manager.ViewProjectActivity"
+            android:label="@string/ma_vproj_label"
+            android:parentActivityName=".view.manager.ViewAllProjectsActivity"></activity>
+        <activity android:name=".view.manager.AddProjectActivity"
+            android:label="@string/ma_aproj_label"
+            android:parentActivityName=".view.manager.ViewAllProjectsActivity"></activity>
+        <activity android:name=".view.manager.EditProjectActivity"
+            android:label="@string/ma_eproj_label"
+            android:parentActivityName=".view.manager.ViewProjectActivity"></activity>
+        <activity android:name=".view.manager.ViewSubtaskActivity"
+            android:label="@string/ma_vsub_label"
+            android:parentActivityName=".view.manager.ViewProjectActivity"></activity>
+        <activity android:name=".view.manager.AddSubtaskActivity"
+            android:label="@string/ma_asub_label"
+            android:parentActivityName=".view.manager.ViewProjectActivity"></activity>
+        <activity android:name=".view.manager.EditSubtaskActivity"
+            android:label="@string/ma_esub_label"
+            android:parentActivityName=".view.manager.ViewSubtaskActivity"></activity>
         <activity
             android:name=".view.scheduler.SchedulerAddTemplate"
             android:parentActivityName=".controller.MainActivity"></activity>

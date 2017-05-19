@@ -78,6 +78,7 @@ public class AddSubtaskActivity extends AppCompatActivity implements View.OnClic
                 {
                     createSubtask(relatedProject);
                     intentChangeView = new Intent(this, ViewProjectActivity.class);
+                    intentChangeView.putExtra("projectID", relatedProjID);
                     startActivity(intentChangeView);
                 }
                 break;

@@ -15,10 +15,11 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="350dp"
+            android:layout_height="375dp"
             android:orientation="vertical"
             android:padding="10dp"
-            android:weightSum="10">
+            android:weightSum="10"
+            android:layout_gravity="center">
 
             <TextView
                 android:id="@+id/ma_asub_dueDateTV"
@@ -37,7 +38,8 @@
                 android:scaleX="0.8"
                 android:scaleY="0.8"
                 android:layout_marginTop="-30dp"
-                android:layout_marginBottom="-50dp" />
+                android:layout_marginBottom="-50dp"
+                android:layout_gravity="center"/>
         </LinearLayout>
 
         <LinearLayout

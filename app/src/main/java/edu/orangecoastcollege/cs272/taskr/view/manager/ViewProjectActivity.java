@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 import edu.orangecoastcollege.cs272.taskr.R;
 import edu.orangecoastcollege.cs272.taskr.controller.DatabaseController;
-import edu.orangecoastcollege.cs272.taskr.controller.ViewSubtaskActivity;
 import edu.orangecoastcollege.cs272.taskr.model.manager.Project;
 import edu.orangecoastcollege.cs272.taskr.model.manager.ProjectModel;
 import edu.orangecoastcollege.cs272.taskr.model.manager.RelatedSubtasksModel;
@@ -62,6 +61,7 @@ public class ViewProjectActivity extends AppCompatActivity implements View.OnCli
         // Retrieve selected project from ViewAllProjectsActivity
         Bundle extras = getIntent().getExtras();
         projectID = extras.getInt("projectID");
+        getIntent().removeCategory("projectID");
         dbc.openDatabase();
         project = ProjectModel.getById(dbc, projectID);
         dbc.close();
@@ -117,6 +117,7 @@ public class ViewProjectActivity extends AppCompatActivity implements View.OnCli
                 {
                     intentChangeView = new Intent(this, ViewSubtaskActivity.class);
                     intentChangeView.putExtra("subID", selectedSubtask.getID());
+                    intentChangeView.putExtra("projID", projectID);
                     startActivity(intentChangeView);
                 }
                 break;
@@ -130,6 +131,20 @@ public class ViewProjectActivity extends AppCompatActivity implements View.OnCli
                 {
                     deleteSubtaskFromDB(selectedSubtask);
                     selectedSubtask = null;
+                    // set hasSubtasks field of project to false if there's no subtasks left
+                    if(allSubsOfProjectList.size() == 0)
+                    {
+                        project.setSubtasks(false);
+                        // update project in database
+                        dbc.openDatabase();
+                        ProjectModel.updateProject(dbc, project);
+                        dbc.close();
+                        // update list and listview for allProjectsList
+                        dbc.openDatabase();
+                        ViewAllProjectsActivity.allProjectsList = ProjectModel.getAllProjects(dbc);
+                        dbc.close();
+                        ViewAllProjectsActivity.adaptProject.notifyDataSetChanged();
+                    }
                 }
                 break;
         }

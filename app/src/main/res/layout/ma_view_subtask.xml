@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="edu.orangecoastcollege.cs272.taskr.view.manager.ViewSubtaskActivity">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -44,7 +45,8 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:padding="10dp"
-        android:weightSum="2">
+        android:weightSum="2"
+        android:gravity="center|bottom">
 
         <Button
             android:id="@+id/ma_vsub_edit_button"

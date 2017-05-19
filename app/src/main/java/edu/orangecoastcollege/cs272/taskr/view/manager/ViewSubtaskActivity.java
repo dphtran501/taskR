@@ -1,4 +1,4 @@
-package edu.orangecoastcollege.cs272.taskr.controller;
+package edu.orangecoastcollege.cs272.taskr.view.manager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,8 +7,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import edu.orangecoastcollege.cs272.taskr.R;
-import edu.orangecoastcollege.cs272.taskr.model.DBHelper;
+import edu.orangecoastcollege.cs272.taskr.controller.DatabaseController;
 import edu.orangecoastcollege.cs272.taskr.model.manager.Subtask;
+import edu.orangecoastcollege.cs272.taskr.model.manager.SubtaskModel;
 
 /**
  * Represents the activity view that allows the user to view the attributes of a specified subtask,
@@ -22,7 +23,7 @@ import edu.orangecoastcollege.cs272.taskr.model.manager.Subtask;
  */
 public class ViewSubtaskActivity extends AppCompatActivity implements View.OnClickListener
 {
-    private DBHelper db;
+    DatabaseController dbc;
 
     TextView subtaskNameTV;
     TextView subtaskDueDateTV;
@@ -30,6 +31,7 @@ public class ViewSubtaskActivity extends AppCompatActivity implements View.OnCli
 
     int subID;
     Subtask subtask;
+    int relatedProjID;
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -37,21 +39,26 @@ public class ViewSubtaskActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ma_view_subtask);
 
-        // Initialize dbhelper
-        db = new DBHelper(this);
+        // Controller instance
+        dbc = DatabaseController.getInstance(this);
 
-        // Retrieve selected subtask fields from ViewProjectActivity
+        // Retrieve selected subtask and related project from ViewProjectActivity
         Bundle extras = getIntent().getExtras();
         subID = extras.getInt("subID");
-        //subtask = db.getSubtask(subID);
+        getIntent().removeExtra("subID");
+        relatedProjID = extras.getInt("projID");
+        getIntent().removeExtra("projID");
+        dbc.openDatabase();
+        subtask = SubtaskModel.getById(dbc, subID);
+        dbc.close();
 
         // Set subtask name, due date, and description in text view
         subtaskNameTV = (TextView) findViewById(R.id.ma_vsub_nameTV);
-        subtaskDueDateTV = (TextView) findViewById(R.id.ma_vsub_dueDateTV);
-        subtaskDescriptionTV = (TextView) findViewById(R.id.ma_vsub_descriptionTV);
         subtaskNameTV.setText(subtask.getName());
+        subtaskDueDateTV = (TextView) findViewById(R.id.ma_vsub_dueDateTV);
         String newDueDateTV = "Due: " + subtask.getDueDate();
         subtaskDueDateTV.setText(newDueDateTV);
+        subtaskDescriptionTV = (TextView) findViewById(R.id.ma_vsub_descriptionTV);
         subtaskDescriptionTV.setText(subtask.getDescription());
 
         // set up button to be associated with actions
@@ -67,7 +74,8 @@ public class ViewSubtaskActivity extends AppCompatActivity implements View.OnCli
         {
             case R.id.ma_vsub_edit_button:
                 intentChangeView = new Intent(this, EditSubtaskActivity.class);
-                intentChangeView.putExtra("subID", subtask.getID());
+                intentChangeView.putExtra("vsub_subID", subID);
+                intentChangeView.putExtra("vsub_projID", relatedProjID);
                 startActivity(intentChangeView);
                 break;
         }

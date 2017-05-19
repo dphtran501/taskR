@@ -7,16 +7,19 @@
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context="edu.orangecoastcollege.cs272.taskr.view.manager.EditSubtaskActivity">
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="350dp"
+            android:layout_height="375dp"
             android:orientation="vertical"
             android:padding="10dp"
-            android:weightSum="10">
+            android:weightSum="10"
+            android:layout_gravity="center">
 
             <TextView
                 android:id="@+id/ma_esub_dueDateTV"
@@ -36,6 +39,7 @@
                 android:scaleY="0.8"
                 android:layout_marginTop="-30dp"
                 android:layout_marginBottom="-50dp"
+                android:layout_gravity="center"
                 />
         </LinearLayout>
 

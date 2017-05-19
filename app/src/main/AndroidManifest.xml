@@ -24,6 +24,8 @@
         <activity android:name=".view.manager.AddProjectActivity"></activity>
         <activity android:name=".view.manager.ViewProjectActivity"></activity>
         <activity android:name=".view.manager.AddSubtaskActivity"></activity>
+        <activity android:name=".view.manager.ViewSubtaskActivity"></activity>
+        <activity android:name=".view.manager.EditSubtaskActivity"></activity>
         <activity
             android:name=".view.scheduler.SchedulerAddTemplate"
             android:parentActivityName=".controller.MainActivity"></activity>

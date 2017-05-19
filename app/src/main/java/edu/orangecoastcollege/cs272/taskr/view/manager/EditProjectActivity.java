@@ -11,15 +11,12 @@ import edu.orangecoastcollege.cs272.taskr.R;
 import edu.orangecoastcollege.cs272.taskr.controller.DatabaseController;
 import edu.orangecoastcollege.cs272.taskr.model.manager.Project;
 import edu.orangecoastcollege.cs272.taskr.model.manager.ProjectModel;
-import edu.orangecoastcollege.cs272.taskr.model.manager.RelatedSubtasksModel;
-import edu.orangecoastcollege.cs272.taskr.model.manager.Subtask;
-import edu.orangecoastcollege.cs272.taskr.model.manager.SubtaskModel;
 
 /**
- * Created by Jeannie on 5/17/2017.
+ * Created by Jeannie on 5/18/2017.
  */
 
-public class EditSubtaskActivity extends AppCompatActivity implements View.OnClickListener
+public class EditProjectActivity extends AppCompatActivity implements View.OnClickListener
 {
     DatabaseController dbc;
 
@@ -27,53 +24,46 @@ public class EditSubtaskActivity extends AppCompatActivity implements View.OnCli
     EditText descriptionET;
     DatePicker dueDateDP;
 
-    int subtaskID;
-    Subtask subtask;
-    int relatedProjectID;
-    Project relatedProject;
+    int projectID;
+    Project project;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         // Layout
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ma_edit_subtask);
+        setContentView(R.layout.ma_edit_project);
 
         // Controller instance
         dbc = DatabaseController.getInstance(this);
 
         // Retrieve subtask from ViewSubtaskActivity
         Bundle extras = getIntent().getExtras();
-        subtaskID = extras.getInt("vsub_subID");
-        getIntent().removeExtra("vsub_subID");
-        relatedProjectID = extras.getInt("vsub_projID");
-        getIntent().removeExtra("vsub_projID");
+        projectID = extras.getInt("projID");
+        getIntent().removeExtra("projID");
         dbc.openDatabase();
-        subtask = SubtaskModel.getById(dbc, subtaskID);
-        dbc.close();
-        dbc.openDatabase();
-        relatedProject = ProjectModel.getById(dbc, relatedProjectID);
+        project = ProjectModel.getById(dbc, projectID);
         dbc.close();
 
         // Set EditText to original field values
-        nameET = (EditText) findViewById(R.id.ma_esub_nameET);
-        nameET.setText(subtask.getName());
-        descriptionET = (EditText) findViewById(R.id.ma_esub_descriptionET);
-        descriptionET.setText(subtask.getDescription());
+        nameET = (EditText) findViewById(R.id.ma_eproj_nameET);
+        nameET.setText(project.getName());
+        descriptionET = (EditText) findViewById(R.id.ma_eproj_descriptionET);
+        descriptionET.setText(project.getDescription());
 
         // Set DatePicker (min date must be before current date)
-        dueDateDP = (DatePicker) findViewById(R.id.ma_esub_dueDateDP);
+        dueDateDP = (DatePicker) findViewById(R.id.ma_eproj_dueDateDP);
         dueDateDP.setMinDate(System.currentTimeMillis() - 1000);
         // TODO: set max dte to project due date
         // set datepicker to original due date
-        String originalDueDate = subtask.getDueDate();
+        String originalDueDate = project.getDueDate();
         int year = Integer.parseInt(originalDueDate.substring(0, 4));
         int month = Integer.parseInt(originalDueDate.substring(5, 7)) - 1;
         int day = Integer.parseInt(originalDueDate.substring(8));
         dueDateDP.updateDate(year, month, day);
 
         // set up button to be associted with action
-        findViewById(R.id.ma_esub_save_button).setOnClickListener(this);
+        findViewById(R.id.ma_eproj_save_button).setOnClickListener(this);
     }
 
     @Override
@@ -82,19 +72,19 @@ public class EditSubtaskActivity extends AppCompatActivity implements View.OnCli
         Intent intentChangeView;
         switch (v.getId())
         {
-            case R.id.ma_esub_save_button:
+            case R.id.ma_eproj_save_button:
                 if (nameET.getText().toString() != null && !nameET.getText().toString().isEmpty())
                 {
-                    editSubtask();
-                    intentChangeView = new Intent(this, ViewSubtaskActivity.class);
-                    intentChangeView.putExtra("subID", subtaskID);
+                    editProject();
+                    intentChangeView = new Intent(this, ViewProjectActivity.class);
+                    intentChangeView.putExtra("projectID", projectID);
                     startActivity(intentChangeView);
                 }
                 break;
         }
     }
 
-    private void editSubtask()
+    private void editProject()
     {
         // Retrieve data
         String name = nameET.getText().toString();
@@ -102,17 +92,17 @@ public class EditSubtaskActivity extends AppCompatActivity implements View.OnCli
         String dueDate = datePickerToString(dueDateDP);
 
         // Update subtask in database
-        subtask.setName(name);
-        subtask.setDescription(description);
-        subtask.setDueDate(dueDate);
+        project.setName(name);
+        project.setDescription(description);
+        project.setDueDate(dueDate);
         dbc.openDatabase();
-        SubtaskModel.updateSubtask(dbc, subtask);
+        ProjectModel.updateProject(dbc, project);
         dbc.close();
-        // update list and listview for allSubsOfProject
+        // update list and listview for allProjects
         dbc.openDatabase();
-        ViewProjectActivity.allSubsOfProjectList = RelatedSubtasksModel.getSubsOfProj(dbc, relatedProject);
+        ViewAllProjectsActivity.allProjectsList = ProjectModel.getAllProjects(dbc);
         dbc.close();
-        ViewProjectActivity.adaptSubtask.notifyDataSetChanged();
+        ViewAllProjectsActivity.adaptProject.notifyDataSetChanged();
     }
 
     /**

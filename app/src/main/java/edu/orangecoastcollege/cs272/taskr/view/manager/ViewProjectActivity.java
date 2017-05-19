@@ -61,7 +61,7 @@ public class ViewProjectActivity extends AppCompatActivity implements View.OnCli
         // Retrieve selected project from ViewAllProjectsActivity
         Bundle extras = getIntent().getExtras();
         projectID = extras.getInt("projectID");
-        getIntent().removeCategory("projectID");
+        getIntent().removeExtra("projectID");
         dbc.openDatabase();
         project = ProjectModel.getById(dbc, projectID);
         dbc.close();
@@ -111,6 +111,9 @@ public class ViewProjectActivity extends AppCompatActivity implements View.OnCli
         switch (v.getId())
         {
             case R.id.ma_vproj_edit_button:
+                intentChangeView = new Intent(this, EditProjectActivity.class);
+                intentChangeView.putExtra("projID", projectID);
+                startActivity(intentChangeView);
                 break;
             case R.id.ma_vproj_view_button:
                 if (selectedSubtask != null)

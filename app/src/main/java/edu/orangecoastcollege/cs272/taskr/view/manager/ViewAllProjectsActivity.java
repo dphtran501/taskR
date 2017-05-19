@@ -30,13 +30,15 @@ import edu.orangecoastcollege.cs272.taskr.model.manager.SubtaskModel;
  */
 public class ViewAllProjectsActivity extends AppCompatActivity implements View.OnClickListener
 {
-
+    // Controller
     DatabaseController dbc;
 
+    // All projects array list, all projects list view, and the adapter that links them
     static ArrayList<Project> allProjectsList;
     static ProjectListAdapter adaptProject;
     private ListView allProjectsLV;
 
+    // Project selected in the list view
     private Project selectedProject;
 
     @Override
@@ -58,22 +60,21 @@ public class ViewAllProjectsActivity extends AppCompatActivity implements View.O
         allProjectsLV = (ListView) findViewById(R.id.ma_projectsLV);
         adaptProject = new ProjectListAdapter(this, R.layout.ma_project_list_item, allProjectsList);
         allProjectsLV.setAdapter(adaptProject);
-        // handle list view item clicks
+
+        // Get selected project when it's clicked in the list view
         allProjectsLV.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 selectedProject = allProjectsList.get(position);
-                //Context context = ViewAllProjectsActivity.this;
-                //Toast.makeText(context, String.valueOf(selectedProject.getID()), Toast.LENGTH_LONG).show();
             }
         });
 
-        // set up buttons to be associated with actions
-        findViewById(R.id.ma_view_project_button).setOnClickListener(this);
-        findViewById(R.id.ma_add_project_button).setOnClickListener(this);
-        findViewById(R.id.ma_delete_project_button).setOnClickListener(this);
+        // Set up buttons to be associated with actions
+        findViewById(R.id.ma_view_project_button).setOnClickListener(this);     // view project
+        findViewById(R.id.ma_add_project_button).setOnClickListener(this);      // add project
+        findViewById(R.id.ma_delete_project_button).setOnClickListener(this);   // delete project
     }
 
     // Associate buttons with actions
@@ -83,27 +84,46 @@ public class ViewAllProjectsActivity extends AppCompatActivity implements View.O
         Intent intentChangeView;
         switch (v.getId())
         {
+            // View selected project
             case R.id.ma_view_project_button:
                 if (selectedProject != null)
                 {
                     intentChangeView = new Intent(this, ViewProjectActivity.class);
-                    intentChangeView.putExtra("projectID", selectedProject.getID());
+                    intentChangeView.putExtra("selectedProjectID", selectedProject.getID());
                     startActivity(intentChangeView);
                 }
                 break;
+            // Add new project
             case R.id.ma_add_project_button:
                 intentChangeView = new Intent(this, AddProjectActivity.class);
                 startActivity(intentChangeView);
                 break;
+            // Delete selected project
             case R.id.ma_delete_project_button:
                 if (selectedProject != null)
                 {
                     deleteProjectFromDB(selectedProject);
+                    // Update all projects list and list view to reflect deleted project
+                    allProjectsList.remove(selectedProject);
+                    adaptProject.notifyDataSetChanged();
                     selectedProject = null;
                 }
                 break;
         }
     }
+
+    // Refresh all projects list and list view when returning to this activity
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        dbc.openDatabase();
+        allProjectsList.clear();
+        allProjectsList.addAll(ProjectModel.getAllProjects(dbc));
+        dbc.close();
+        adaptProject.notifyDataSetChanged();
+    }
+
 
     /**
      * Deletes a project and any related subtasks from the database.
@@ -137,9 +157,5 @@ public class ViewAllProjectsActivity extends AppCompatActivity implements View.O
         dbc.openDatabase();
         ProjectModel.deleteProject(dbc, p);
         dbc.close();
-
-        // Reset list and list view
-        allProjectsList.remove(p);
-        adaptProject.notifyDataSetChanged();
     }
 }

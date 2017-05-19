@@ -1,6 +1,5 @@
 package edu.orangecoastcollege.cs272.taskr.view.manager;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -19,12 +18,12 @@ import edu.orangecoastcollege.cs272.taskr.model.manager.ProjectModel;
  * @version 1.0
  * @since   2017-05-12
  */
-
 public class AddProjectActivity extends AppCompatActivity implements View.OnClickListener
 {
-
+    // Controller
     DatabaseController dbc;
 
+    // Nodes
     EditText nameET;
     EditText descriptionET;
     DatePicker dueDateDP;
@@ -47,32 +46,30 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
         // Set DatePicker (min date must be before current date)
         dueDateDP.setMinDate(System.currentTimeMillis() - 1000);
 
-        // Set up button to be associated with action
+        // Set up (add project) button to be associated with action
         findViewById(R.id.ma_aproj_add_button).setOnClickListener(this);
     }
 
-    // Associate button with actions
+    // Associate (add project) button with actions
     @Override
     public void onClick(View v)
     {
-        Intent intentChangeView;
         switch (v.getId())
         {
             case R.id.ma_aproj_add_button:
                 if (nameET.getText().toString() != null && !nameET.getText().toString().isEmpty())
                 {
+                    // Create project
                     createProject();
-                    intentChangeView = new Intent(this, ViewAllProjectsActivity.class);
-                    startActivity(intentChangeView);
+                    finish();   // Goes to onResume in ViewAllProjectsActivity
                 }
                 break;
         }
     }
 
     /**
-     * Creates a <code>Project</code> using the field values in the EditText and DatePicker,
-     * adds the new project to the project database, and adds the <code>Project</code> to the list
-     * of all projects.
+     * Creates a <code>Project</code> using the field values in the EditText and DatePicker, and
+     * adds the new project to the project database.
      */
     private void createProject()
     {
@@ -85,12 +82,8 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
         // Add project to database (id -1 is only temporary here)
         Project newProject = new Project(-1, name, description, dueDate, hasSubtasks);
         dbc.openDatabase();
-        int projID = ProjectModel.save(dbc, newProject);    // generated project record id
+        ProjectModel.save(dbc, newProject);
         dbc.close();
-
-        // Update list and list view
-        ViewAllProjectsActivity.allProjectsList.add(new Project(projID, name, description, dueDate, hasSubtasks));
-        ViewAllProjectsActivity.adaptProject.notifyDataSetChanged();
     }
 
     /**

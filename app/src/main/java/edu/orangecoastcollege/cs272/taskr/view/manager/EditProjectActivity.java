@@ -3,6 +3,7 @@ package edu.orangecoastcollege.cs272.taskr.view.manager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -13,19 +14,25 @@ import edu.orangecoastcollege.cs272.taskr.model.manager.Project;
 import edu.orangecoastcollege.cs272.taskr.model.manager.ProjectModel;
 
 /**
- * Created by Jeannie on 5/18/2017.
+ * Represents the activity view that allows the user to edit a <code>Project</code> in the database.
+ *
+ * @author  Derek Tran
+ * @version 1.0
+ * @since   2017-05-18
  */
-
 public class EditProjectActivity extends AppCompatActivity implements View.OnClickListener
 {
+    // Controller
     DatabaseController dbc;
 
+    // Nodes
     EditText nameET;
     EditText descriptionET;
     DatePicker dueDateDP;
 
-    int projectID;
-    Project project;
+    // Project to be editted
+    int projectToEditID;
+    Project projectToEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,53 +44,72 @@ public class EditProjectActivity extends AppCompatActivity implements View.OnCli
         // Controller instance
         dbc = DatabaseController.getInstance(this);
 
-        // Retrieve subtask from ViewSubtaskActivity
-        Bundle extras = getIntent().getExtras();
-        projectID = extras.getInt("projID");
-        getIntent().removeExtra("projID");
+        // Retrieve project-to-edit ID from ViewProjectActivity
+        projectToEditID = getIntent().getIntExtra("projectToEditID", -1);
+        getIntent().removeExtra("projectToEditID");
+        // Use project-to-edit ID to construct project from database
         dbc.openDatabase();
-        project = ProjectModel.getById(dbc, projectID);
+        projectToEdit = ProjectModel.getById(dbc, projectToEditID);
         dbc.close();
 
         // Set EditText to original field values
         nameET = (EditText) findViewById(R.id.ma_eproj_nameET);
-        nameET.setText(project.getName());
+        nameET.setText(projectToEdit.getName());
         descriptionET = (EditText) findViewById(R.id.ma_eproj_descriptionET);
-        descriptionET.setText(project.getDescription());
+        descriptionET.setText(projectToEdit.getDescription());
 
         // Set DatePicker (min date must be before current date)
         dueDateDP = (DatePicker) findViewById(R.id.ma_eproj_dueDateDP);
         dueDateDP.setMinDate(System.currentTimeMillis() - 1000);
         // TODO: set max dte to project due date
-        // set datepicker to original due date
-        String originalDueDate = project.getDueDate();
+        // Set DatePicker to original due date
+        String originalDueDate = projectToEdit.getDueDate();
         int year = Integer.parseInt(originalDueDate.substring(0, 4));
         int month = Integer.parseInt(originalDueDate.substring(5, 7)) - 1;
         int day = Integer.parseInt(originalDueDate.substring(8));
         dueDateDP.updateDate(year, month, day);
 
-        // set up button to be associted with action
+        // Set up (save project) button to be associated with action
         findViewById(R.id.ma_eproj_save_button).setOnClickListener(this);
     }
 
+    // Associate (save project) button with actions
     @Override
     public void onClick(View v)
     {
-        Intent intentChangeView;
         switch (v.getId())
         {
             case R.id.ma_eproj_save_button:
                 if (nameET.getText().toString() != null && !nameET.getText().toString().isEmpty())
                 {
+                    // Edit project
                     editProject();
-                    intentChangeView = new Intent(this, ViewProjectActivity.class);
-                    intentChangeView.putExtra("projectID", projectID);
-                    startActivity(intentChangeView);
+                    finish(); // Goes to onResume in ViewProjectActivity
                 }
                 break;
         }
     }
 
+    // Handling up button in action bar (returns to ViewProjectActivity)
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                Intent upIntent = new Intent(this, ViewProjectActivity.class);
+                // Restarts onCreate in ViewProjectActivity, so need to pass back projectID
+                upIntent.putExtra("selectedProjectID", projectToEditID);
+                navigateUpTo(upIntent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Edits a <code>Project</code> using the new field values in the EditText and DatePicker,
+     * and updates the project in the database.
+     */
     private void editProject()
     {
         // Retrieve data
@@ -92,17 +118,12 @@ public class EditProjectActivity extends AppCompatActivity implements View.OnCli
         String dueDate = datePickerToString(dueDateDP);
 
         // Update subtask in database
-        project.setName(name);
-        project.setDescription(description);
-        project.setDueDate(dueDate);
+        projectToEdit.setName(name);
+        projectToEdit.setDescription(description);
+        projectToEdit.setDueDate(dueDate);
         dbc.openDatabase();
-        ProjectModel.updateProject(dbc, project);
+        ProjectModel.updateProject(dbc, projectToEdit);
         dbc.close();
-        // update list and listview for allProjects
-        dbc.openDatabase();
-        ViewAllProjectsActivity.allProjectsList = ProjectModel.getAllProjects(dbc);
-        dbc.close();
-        ViewAllProjectsActivity.adaptProject.notifyDataSetChanged();
     }
 
     /**

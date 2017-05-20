@@ -1,7 +1,5 @@
 package edu.orangecoastcollege.cs272.taskr.model.manager;
 
-
-
 /**
  * The <code>Subtask</code> class represents a subtask of an assignment.
  *
@@ -11,7 +9,6 @@ package edu.orangecoastcollege.cs272.taskr.model.manager;
  */
 public class Subtask extends Assignment
 {
-
 
     /**
      * Creates a new <code>Subtask</code> object.

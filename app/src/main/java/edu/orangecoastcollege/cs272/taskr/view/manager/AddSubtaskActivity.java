@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import edu.orangecoastcollege.cs272.taskr.R;
 import edu.orangecoastcollege.cs272.taskr.controller.DatabaseController;
 import edu.orangecoastcollege.cs272.taskr.model.manager.Project;
@@ -60,9 +64,16 @@ public class AddSubtaskActivity extends AppCompatActivity implements View.OnClic
         descriptionET = (EditText) findViewById(R.id.ma_asub_descriptionET);
         dueDateDP = (DatePicker) findViewById(R.id.ma_asub_dueDateDP);
 
-        // Set DatePicker (min date must be before current date)
+        // Set DatePicker (min date must be before current date; max date set to project due date)
         dueDateDP.setMinDate(System.currentTimeMillis() - 1000);
-        // TODO: set max date to project due date
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date projectDueDate = sdf.parse(relatedProject.getDueDate());
+            long msSinceEpoch = projectDueDate.getTime();
+            dueDateDP.setMaxDate(msSinceEpoch);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         // Set up (add subtask) button to be associated with action
         findViewById(R.id.ma_asub_add_button).setOnClickListener(this);

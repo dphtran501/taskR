@@ -8,8 +8,14 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import edu.orangecoastcollege.cs272.taskr.R;
 import edu.orangecoastcollege.cs272.taskr.controller.DatabaseController;
+import edu.orangecoastcollege.cs272.taskr.model.manager.Project;
+import edu.orangecoastcollege.cs272.taskr.model.manager.ProjectModel;
 import edu.orangecoastcollege.cs272.taskr.model.manager.Subtask;
 import edu.orangecoastcollege.cs272.taskr.model.manager.SubtaskModel;
 
@@ -33,8 +39,9 @@ public class EditSubtaskActivity extends AppCompatActivity implements View.OnCli
     // Subtask to be editted
     int subtaskToEditID;
     Subtask subtaskToEdit;
-    // Related project ID (need this for up button)
+    // Related project ID (need this for up button and setting max date)
     int relatedProjectID;
+    Project relatedProject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -52,9 +59,12 @@ public class EditSubtaskActivity extends AppCompatActivity implements View.OnCli
         dbc.openDatabase();
         subtaskToEdit = SubtaskModel.getById(dbc, subtaskToEditID);
         dbc.close();
-        // Retrieve related project ID from ViewSubtaskActivity
+        // Retrieve related project from ViewSubtaskActivity
         relatedProjectID = getIntent().getIntExtra("relatedProjectID", -1);
         getIntent().removeExtra("relatedProjectID");
+        dbc.openDatabase();
+        relatedProject = ProjectModel.getById(dbc, relatedProjectID);
+        dbc.close();
 
         // Set EditText to original field values
         nameET = (EditText) findViewById(R.id.ma_esub_nameET);
@@ -65,7 +75,14 @@ public class EditSubtaskActivity extends AppCompatActivity implements View.OnCli
         // Set DatePicker (min date must be before current date)
         dueDateDP = (DatePicker) findViewById(R.id.ma_esub_dueDateDP);
         dueDateDP.setMinDate(System.currentTimeMillis() - 1000);
-        // TODO: set max dte to project due date
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date projectDueDate = sdf.parse(relatedProject.getDueDate());
+            long msSinceEpoch = projectDueDate.getTime();
+            dueDateDP.setMaxDate(msSinceEpoch);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         // Set DatePicker to original due date
         String originalDueDate = subtaskToEdit.getDueDate();
         int year = Integer.parseInt(originalDueDate.substring(0, 4));

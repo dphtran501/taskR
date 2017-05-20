@@ -42,7 +42,14 @@ import edu.orangecoastcollege.cs272.taskr.view.scheduler.SchedulerHome;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-
+/**
+ * <code>taskR</code> is an application that houses three features
+ * scheduleR allows the user to quickly add events to their Google Calendar from user-made templates
+ * manageR allows the user to create deadlines and ...
+ * remindeR allows the user to create task lists and ...
+ *
+ * @author Vincent Hoang
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
     /* DECLARATIONS */
 
@@ -64,10 +71,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // Calendar insertion
     Event mEvent;
 
-    // Database
-
-
-
+    /**
+     * <code>onCreate()</code>
+     * Initializes the code below upon start up
+     *  - Assigns button listeners to the buttons defined in the XML layout
+     *  - Assigns a reference id to the TextViews and LinearLayouts as defined in the XML
+     *  - Creates a series of tokens to authenticate with Google Play Services, including
+     *      requesting permission from Google Calendar API
+     *  - Checks if the user has already logged into Google Play Services prior and updates
+     *      the UI if logged in is true
+     *
+     * @param savedInstanceState Prior state if returning from another activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,10 +91,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         /* Button Listeners */
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         findViewById(R.id.ma_vincent_scheduler_button).setOnClickListener(this);
-        //findViewById(R.id.scheduler_add_button).setOnClickListener(this);
-        //findViewById(R.id.scheduler_delete_button).setOnClickListener(this);
-
-
         findViewById(R.id.ma_derek_manager_button).setOnClickListener(this);
 
 
@@ -101,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone() && mCredential != null)
         {
-            // If the user's cached credentials are valid, the OptionalPendingResult will be "done" and the GoogleSignInResult will be available instantly.
             Log.d("TAG", "Got cached sign-in");
             GoogleSignInResult result = opr.get();
             handleSignInResult(result);
@@ -130,6 +140,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /* Google Login Methods */
+
+    /**
+     * Logs the result of a failed connection attempt
+     */
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
@@ -138,12 +152,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
-            //GoogleSignInAccount acct = result.getSignInAccount();
+            // GoogleSignInAccount acct = result.getSignInAccount();
+            // Not used in this version. May revisit
             updateUI(true);
         } else {
             updateUI(false);
         }
     }
+
+    /**
+     * Updates the View if the user is signed in
+     * @param signedIn boolean result from handleSignInResult()
+     */
     protected void updateUI(boolean signedIn) {
         if (signedIn) {
             mLoginStatus.setText(R.string.ma_vincent_login_text_true);
@@ -160,10 +180,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Signs the user into Google Play Services and returns a result code to be handled
+     */
     protected void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
-        updateUI(true);
     }
 
     private void getResultsFromApi() {
@@ -178,6 +200,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Posts an event to Google Calendar with an asynchronous task
+     * @param event The event to be posted to calendar
+     */
     public void postEvent(Event event){
         if (event != null) {
             mEvent = event;
@@ -185,6 +211,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Handles activity results from other methods in this class
+     *
+     * @param requestCode The request code sent with the activity
+     * @param resultCode The result code returned from the activity
+     * @param data Something pertaining to the user account from the account chooser
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -286,11 +319,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 connectionStatusCode,
                 REQUEST_GOOGLE_PLAY_SERVICES);
         dialog.show();
-    }
-
-    @Override
-    public void onBackPressed() {
-        moveTaskToBack(true);
     }
 
     private class MakeRequestTask extends AsyncTask<Void, Void, Boolean> {

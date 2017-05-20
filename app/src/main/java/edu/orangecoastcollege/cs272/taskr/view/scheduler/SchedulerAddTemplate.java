@@ -11,17 +11,33 @@ import edu.orangecoastcollege.cs272.taskr.controller.DatabaseController;
 import edu.orangecoastcollege.cs272.taskr.model.scheduler.Template;
 import edu.orangecoastcollege.cs272.taskr.model.scheduler.TemplateModel;
 
+/**
+ * This scene records the information the user entered and commits them to the database and updates subsequent listViews
+ *
+ * @author Vincent Hoang
+ */
 public class SchedulerAddTemplate extends AppCompatActivity implements View.OnClickListener {
 
-    EditText templateNameET;
-    EditText eventNameET;
-    EditText descriptionET;
-    EditText locationET;
-    boolean startTimeToggle;
-    boolean endTimeToggle;
-    TextView startTime;
+    // Fields
+    private EditText templateNameET;
+    private EditText eventNameET;
+    private EditText descriptionET;
+    private EditText locationET;
+    private boolean startTimeToggle;
+    private boolean endTimeToggle;
+    private TextView startTime;
+
+    // Database
     DatabaseController dbc;
 
+
+    /**
+     * Initializes the following upon creation:
+     *  - Attaches button listeners to buttons defined in XML
+     *  - Creates a reference to EditText and TextViews defined in XML
+     *  - Gets an instance of the DatabaseController with this activity's context
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +55,6 @@ public class SchedulerAddTemplate extends AppCompatActivity implements View.OnCl
         eventNameET = (EditText) findViewById(R.id.s_summaryET);
         descriptionET = (EditText) findViewById(R.id.s_descET);
         locationET = (EditText) findViewById(R.id.s_locationET);
-
-
     }
 
     private void createFromTemplateFields() {
@@ -61,6 +75,10 @@ public class SchedulerAddTemplate extends AppCompatActivity implements View.OnCl
         dbc.close();
         }
 
+    /**
+     * Handles button clicks
+     * @param v Parent view
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

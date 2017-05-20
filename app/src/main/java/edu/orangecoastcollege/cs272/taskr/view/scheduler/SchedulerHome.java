@@ -16,7 +16,7 @@ import edu.orangecoastcollege.cs272.taskr.R;
 
 public class SchedulerHome extends AppCompatActivity implements View.OnClickListener {
 
-    TemplateListAdapter adaptTemplate;
+    SchedulerAdapter adaptTemplate;
     ListView allTemplatesListLV;
     ArrayList<Template> allTemplatesList;
     DatabaseController dbc;
@@ -35,7 +35,7 @@ public class SchedulerHome extends AppCompatActivity implements View.OnClickList
 
 
         allTemplatesListLV = (ListView) findViewById(R.id.schedulerListView);
-        adaptTemplate = new TemplateListAdapter(this, R.layout.scheduler_list_item, allTemplatesList);
+        adaptTemplate = new SchedulerAdapter(this, R.layout.scheduler_list_item, allTemplatesList);
         allTemplatesListLV.setAdapter(adaptTemplate);
 
         findViewById(R.id.scheduler_add_button).setOnClickListener(this);

@@ -16,7 +16,9 @@ import edu.orangecoastcollege.cs272.taskr.R;
 import edu.orangecoastcollege.cs272.taskr.model.scheduler.Template;
 
 /**
- * Created by vietn on 5/3/2017.
+ * Adapts a ListView to display contents from an ArrayList of objects.
+ *
+ * @author Vincent Hoang on 5/3/2017.
  */
 
 public class SchedulerAdapter extends ArrayAdapter<Template> {
@@ -25,6 +27,13 @@ public class SchedulerAdapter extends ArrayAdapter<Template> {
     private List<Template> mTemplatesList = new ArrayList<>();
     private int mResourceId;
 
+
+    /**
+     * Constructor for the adapter
+     * @param context context of where the adapter is used
+     * @param resourceId reference ID of where the ListView is defined in the XML
+     * @param templates list of templates to be displayed
+     */
     public SchedulerAdapter(Context context, int resourceId, List<Template> templates) {
         super(context, resourceId, templates);
         mContext = context;
@@ -37,7 +46,7 @@ public class SchedulerAdapter extends ArrayAdapter<Template> {
      * @param pos position of the ListView object
      * @param convertView Converts default ListView object to format specified in XML
      * @param parent Parent listview
-     * @return
+     * @return updated View (listview)
      */
     @Override
     public View getView(int pos, View convertView, ViewGroup parent) {
